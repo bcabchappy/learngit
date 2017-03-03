@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>getIEVersion.html</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script type="text/javascript">
+		function getBrowserInfo()
+{
+var agent = navigator.userAgent.toLowerCase() ;
+
+var regStr_ie = /msie [\d.]+;/gi ;
+var regStr_ff = /firefox\/[\d.]+/gi
+var regStr_chrome = /chrome\/[\d.]+/gi ;
+var regStr_saf = /safari\/[\d.]+/gi ;
+//IE
+if(agent.indexOf("msie") > 0)
+{
+return agent.match(regStr_ie) ;
+}
+
+//firefox
+if(agent.indexOf("firefox") > 0)
+{
+return agent.match(regStr_ff) ;
+}
+
+//Chrome
+if(agent.indexOf("chrome") > 0)
+{
+return agent.match(regStr_chrome) ;
+}
+
+//Safari
+if(agent.indexOf("safari") > 0 && agent.indexOf("chrome") < 0)
+{
+return agent.match(regStr_saf) ;
+}
+
+}
+
+function getVersion(){
+	var browser = getBrowserInfo() ;
+//alert(browser); 
+var verinfo = (browser+"").replace(/[^0-9.]/ig,""); 
+alert(verinfo);
+}
+
+function getIEVersion(){
+	if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/7./i)=="7.") 
+{ 
+alert("IE 7.0"); 
+} 
+else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/8./i)=="8.") 
+{ 
+alert("IE 8.0"); 
+} 
+else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/9./i)=="9.") 
+{ 
+alert("IE 9.0"); 
+} 
+else if(navigator.appName == "Microsoft Internet Explorer") 
+{ 
+alert("IE 6.0"); 
+}
+}
+	</script>
+	
+</head>
+
+<body>
+	<button onclick="getIEVersion()" >获取浏览器版</button>
+	<br>
+</body>
+</html>

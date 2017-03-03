@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Baidu Map</title>
+    <link rel="stylesheet" href="http://112.74.13.45:8091/arcgis_js_v316/api/esri/css/esri.css">
+<!--     <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css"> -->
+    <script src="http://192.168.31.66:8083/agMpiMap/resources/jquery/jquery-1.11.2.min.js"></script>
+    <script src="http://112.74.13.45:8091/arcgis_js_v316/api/config.js"></script>
+	<script src="http://112.74.13.45:8091/arcgis_js_v316/api/init.js"></script>
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .base-map-ano{
+            position: absolute;
+            right: 0pt;
+            top:18pt;
+            background: #e6edf1;
+            border: #96aed1 1px solid;
+            padding: 4px 5px;
+            padding-left: 0px;
+            padding-top: 0px;
+            display: none;
+            font-weight: normal;
+        }
+        .base-map{
+            position: absolute;
+            right: 15pt;
+            top:15pt;
+            background: #f0f0f0;
+            border: #96aed1 1px solid;
+            width: auto;
+            height: auto;
+            z-index: 99;
+            font:normal 11px "宋体",Arial;
+            color:#868686;
+        }
+        .base-map-switch{
+            padding: 4px 8px;
+            float: left;
+        }
+        .base-map-switch-active{
+            background:#e6edf1;
+            font-weight: bold;
+            color: #4d4d4d;
+        }
+        .base-map-switch:hover{
+            cursor: pointer;
+        }
+        .base-map-switch-center{
+            border: 1px #96aed1 solid;
+            border-top:none;
+            border-bottom:none;
+        }
+    </style>
+    <script src="./js/BDAnoLayer.js"></script>
+	<script src="./js/BDImgLayer.js"></script>
+	<script src="./js/BDVecLayer.js"></script>
+    <script type="text/javascript">
+        dojoConfig = {
+            parseOnLoad: true,
+             packages: [{
+                 name: 'bdlib',
+                 location: "http://112.74.13.45:8091/arcgis_js_v316/api/bdlib"
+             }]
+        };
+    </script>
+    <script type="text/javascript">
+	    function createTiledLayer(url){
+			return new esri.layers.ArcGISTiledMapServiceLayer(url);
+		}
+		
+		function createFeatureLayer(url){
+			return new esri.layers.FeatureLayer(url);
+		}
+		
+		function createDynamicLayer(url){
+			return new esri.layers.ArcGISDynamicMapServiceLayer(url);
+		}
+		
+		function createGraphicsLayer(){
+			return new esri.layers.GraphicsLayer();
+		}
+    </script>
+    <script>
+        var map;
+        var vecMap;
+        var imgMap;
+        var anoMap;
+         require(["esri/map",
+              "bdlib/BDVecLayer",
+              "bdlib/BDImgLayer",
+              "bdlib/BDAnoLayer",
+             "esri/layers/FeatureLayer",
+             "esri/geometry/Point",
+             "esri/SpatialReference",
+             "dojo/domReady!"],
+                 function (Map,
+                           BDVecLayer,
+                           BDImgLayer,
+                           BDAnoLayer,
+                           FeatureLayer,
+                           Point,
+                           SpatialReference
+                         ){
+                     map = new Map("mapDiv", {
+                         logo: false
+                     });
+                      vecMap = new BDVecLayer();
+                      imgMap = new BDImgLayer();
+                      anoMap = new BDAnoLayer();
+                     map.addLayer(vecMap);
+                     map.addLayers([imgMap,anoMap]);
+                     imgMap.hide(),anoMap.hide();
+
+                     var pt = new Point(7038512.810510807, 2629489.7975553474, new SpatialReference({ wkid: 102100 }));
+                     map.centerAndZoom(pt, 5);
+
+//                     showMap = function(layer){
+//                         设置按钮样式
+//                         var baseMap = ["vec","img"];
+//                         for(var i= 0, dl=baseMap.length;i<dl;i++){
+//                             $("#"+baseMap[i]).removeClass("base-map-switch-active");
+//                         }
+//                         $("#"+layer).addClass("base-map-switch-active");
+//                         设置显示地图
+//                         switch(layer){
+//                             case "img":{//影像
+//                                 vecMap.hide();
+//                                 imgMap.show();
+//                                 $("#ano").show();
+//                                 break;
+//                             }
+//                             default :{//地图
+//                                 vecMap.show();
+//                                 imgMap.hide(),anoMap.hide();
+//                                 $("#ano").hide();
+//                                 $("#chkAno").attr("checked",false);
+//                                 break;
+//                             }
+//                         }
+//                     };
+//                     anoCtrl = function(){
+//                         if($("#chkAno").attr("checked")){
+//                             anoMap.show();
+//                         }
+//                         else{
+//                             anoMap.hide();
+//                         }
+//                     }
+                 });
+        
+//         require(["esri/map", "dojo/domReady!"], function(Map) {
+//         	map = new Map("mapDiv", {
+//         			logo: false
+//         		});
+//       });
+        
+        function loadMap(){
+//         	map = new esri.Map("mapDiv", {
+//                 logo: false
+//             });
+//         	var vecMap = new BDVecLayer();
+//             var imgMap = new BDImgLayer();
+//             var anoMap = new BDAnoLayer();
+//             map.addLayer(vecMap);
+//             map.addLayers([imgMap,anoMap]);
+ //           imgMap.hide(),anoMap.hide();
+
+ //           var pt = new Point(7038512.810510807, 2629489.7975553474, new SpatialReference({ wkid: 102100 }));
+ //           map.centerAndZoom(pt, 5);
+            
+        }
+        
+       function showMap(layer){
+            //设置按钮样式
+            var baseMap = ["vec","img"];
+            for(var i= 0, dl=baseMap.length;i<dl;i++){
+                $("#"+baseMap[i]).removeClass("base-map-switch-active");
+            }
+            $("#"+layer).addClass("base-map-switch-active");
+            //设置显示地图
+            switch(layer){
+                case "img":{//影像
+                    vecMap.hide();
+                    imgMap.show();
+                    $("#ano").show();
+                    break;
+                }
+                default :{//地图
+                    vecMap.show();
+                    imgMap.hide(),anoMap.hide();
+                    $("#ano").hide();
+                    $("#chkAno").attr("checked",false);
+                    break;
+                }
+            }
+        }
+       
+       function anoCtrl(){
+           if($("#chkAno").attr("checked")){
+               anoMap.show();
+           }
+           else{
+               anoMap.hide();
+           }
+       }
+       
+       function showAgMap(){
+			if(!agsMap){
+				agsMap = new esri.Map("mapDiv", {logo: false, slider: false}); 
+				agsMap.spatialReference=new esri.SpatialReference({ wkid: 102100 });
+			}
+			 var ydtUrl="http://192.168.15.83:6080/arcgis/rest/services/CoreMap/xm_sghy_ydt/MapServer";
+			 var jsxmUrl="http://192.168.15.83:6080/arcgis/rest/services/CoreMap/xm_sghy_jsxm/MapServer";
+			 var ylydUrl="http://192.168.15.83:6080/arcgis/rest/services/ZxghMap/xm_zxgh_ylws/MapServer";
+			 var jsxm="http://192.168.15.83:6080/arcgis/rest/services/test/wgs84Spxmbjtc/MapServer";
+			 //var layer = esri.layers.ArcGISTiledMapServiceLayer(ydtUrl);
+			//agsMap.addLayer(createTiledLayer(ydtUrl));
+			//agsMap.addLayer(createDynamicLayer(jsxmUrl));
+			
+			var url="http://192.168.15.83:6080/arcgis/rest/services/test/c1021dbd/MapServer";
+			var bdqx="http://192.168.15.83:6080/arcgis/rest/services/test/bd_qx/MapServer";
+			var bddrawp="http://192.168.15.83:6080/arcgis/rest/services/test/bd_drawpoint/MapServer";
+			var dmdz4="http://192.168.15.83:6080/arcgis/rest/services/test/wgs84Dmdz4/MapServer";
+			var bddrawp3="http://192.168.15.83:6080/arcgis/rest/services/test/bd_drawp3/MapServer";
+			var bddrawp31="http://192.168.15.83:6080/arcgis/rest/services/test/bd_drawp3_1/MapServer";
+			var xm_qx_jy="http://192.168.15.83:6080/arcgis/rest/services/test/xm_qx_jy/MapServer";
+			var xm_qx_jy1="http://192.168.15.83:6080/arcgis/rest/services/test/xm_qx_jy1/MapServer";
+			var dmdz_jy="http://192.168.15.83:6080/arcgis/rest/services/test/dmdz_jy/MapServer";
+			var dmdz_1021="http://192.168.15.83:6080/arcgis/rest/services/test/dmdz_10210/MapServer";
+			var spxm_jy="http://192.168.15.83:6080/arcgis/rest/services/test/spxm_yz/MapServer";
+			var spxm_yz="http://192.168.15.83:6080/arcgis/rest/services/test/old_spxm_yz/MapServer";
+			var xm_qx_jy_tiled="http://192.168.15.83:6080/arcgis/rest/services/test/xm_qx_jy_tiled/MapServer";
+			agsMap.addLayer(createDynamicLayer(spxm_yz));
+			//agsMap.addLayer(createDynamicLayer(bdqx));
+			//agsMap.addLayer(createDynamicLayer(bddrawp));
+			//agsMap.addLayer(createDynamicLayer(url));
+			//agsMap.addLayer(createDynamicLayer(bddrawp31));
+			agsMap.addLayer(createDynamicLayer(dmdz4));
+			agsMap.addLayer(createDynamicLayer(dmdz_1021));
+			//agsMap.addLayer(createDynamicLayer(xm_qx_jy1));
+			agsMap.addLayer(createDynamicLayer(dmdz_jy));
+			agsMap.addLayer(createTiledLayer(xm_qx_jy_tiled));
+			
+			return;
+			
+			agsMap.removeAllLayers();
+			var layer=createDynamicLayer(dmdz4);
+			layer.id="dmdz";
+			agsMap.addLayer(layer);
+			var str="";
+			str=agsMap.layerIds.join(",");
+			for(var index in agsMap.layerIds){
+			}
+	    }
+		
+       var agsMap; 
+		function showBdMap(){
+			require(["esri/map",
+			          "bdlib/BDVecLayer",
+			          "bdlib/BDImgLayer",
+			          "bdlib/BDAnoLayer",
+			         "esri/layers/FeatureLayer",
+			         "esri/geometry/Point",
+			         "esri/SpatialReference",
+			         "dojo/domReady!"],
+			             function (Map,
+			                       BDVecLayer,
+			                       BDImgLayer,
+			                       BDAnoLayer,
+			                       FeatureLayer,
+			                       Point,
+			                       SpatialReference
+			                     ){
+								if(!agsMap){
+									agsMap = new esri.Map("mapDiv", {logo: false, slider: false}); 
+									agsMap.spatialReference=new esri.SpatialReference({ wkid: 102100 });
+								}
+			                  vecMap = new BDVecLayer();
+			                  imgMap = new BDImgLayer();
+			                  anoMap = new BDAnoLayer();
+			                  agsMap.addLayer(vecMap);
+			                  agsMap.addLayers([imgMap,anoMap]);
+			                 imgMap.hide(),anoMap.hide();
+
+			                 //var pt = new Point(7038512.810510807, 2629489.7975553474, new SpatialReference({ wkid: 102100 }));
+			                 var pt = new Point(7038512.810510807, 2629489.7975553474, new SpatialReference({ wkid: 102100 }));
+			                 agsMap.centerAndZoom(pt, 5);
+			  });
+	    }
+		
+		function queryTask(){
+			
+			//var gcg02=GPS.gcj_encrypt(39.957,116.379);//WGS-84 to GCJ-02
+			//var bd09=GPS.bd_encrypt(gcg02.lon, gcg02.lat);
+			
+			var graphic;
+			var p;
+			var pt = new esri.geometry.Point(7538512.810510807, 2629489.7975553474, new esri.SpatialReference({ wkid: 102100 }));
+			//pt = new esri.geometry.Point(bd09.lon,bd09.lat, new esri.SpatialReference({ wkid: 102100 }));
+			// agsMap.centerAndZoom(pt, 5);
+          //agsMap.removeLayer(layer);
+          var graphicsLayer=agsMap.getLayer("graphicsLayer");
+          if(!graphicsLayer){
+       	   graphicsLayer=createGraphicsLayer();
+       	   agsMap.addLayer(graphicsLayer);
+          }
+          graphicsLayer.clear();
+          //图片定位点
+			var iconUrl = 'http://192.168.31.66:8083/agMpiMap/resources/images/marker/location.png';
+			var pictureMarkerSymbol = new esri.symbol.PictureMarkerSymbol(iconUrl,25,34);
+			//红圆绿框
+			var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
+			var outline = new esri.symbol.SimpleLineSymbol().setWidth(2).setColor(new esri.Color([0,255,0]));
+			markerSymbol.setOutline(outline).setColor(new esri.Color([255,0,0])).setSize("32");
+			//绿方红框
+			var simpleMarkerSymbol= new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10,
+				    new esri.symbol.SimpleLineSymbol("solid",
+				    new esri.Color([255,0,0]), 1),
+				    new esri.Color([0,255,0,0.25]));
+			//浅蓝气泡标识
+			var markerSymbol1 =  new esri.symbol.SimpleMarkerSymbol();
+			markerSymbol1.setPath("M16,4.938c-7.732,0-14,4.701-14,10.5c0,1.981,0.741,3.833,2.016,5.414L2,25.272l5.613-1.44c2.339,1.316,5.237,2.106,8.387,2.106c7.732,0,14-4.701,14-10.5S23.732,4.938,16,4.938zM16.868,21.375h-1.969v-1.889h1.969V21.375zM16.772,18.094h-1.777l-0.176-8.083h2.113L16.772,18.094z");
+			markerSymbol1.setColor(new esri.Color("#00FFFF"));
+			
+			var fillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+				    new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT,
+				    new esri.Color([255,0,0]), 2),new esri.Color([255,255,0,0.25])
+				  );
+			
+			var textSymbol =  new esri.symbol.TextSymbol("Hello World");
+// 			.setColor(
+// 				    new esri.Color([128,0,0])).setAngle(45).setFont(
+// 				    new esri.Font("12pt").setWeight(Font.WEIGHT_BOLD)) ;
+			
+			ag
+// 			var agp = new esri.geometry.Point(118.12156709982055 ,24.55548970362707);		
+// 			var graphic = new esri.Graphic(agp,pictureMarkerSymbol,null);
+// 			graphic.setSymbol(pictureMarkerSymbol);
+// 			graphicsLayer.add(graphic);
+// 			graphicsLayer.id="graphicsLayer";
+//			agsMap.addLayers([]);
+// 			agsMap.reorderLayer(graphicsLayer, agsMap.layerIds.length+1);
+// 			agsMap.centerAndZoom(agp,1);
+			//百度
+			//pt = new esri.geometry.Point(7849823.2133, 1665341.2433999995, new esri.SpatialReference({ wkid: 102100 }));
+			//pt = new esri.geometry.Point(13146934.247, 2827156.285, new esri.SpatialReference({ wkid: 102100 }));
+			//var graphic = new esri.Graphic(pt,pictureMarkerSymbol,null);
+			//graphicsLayer.add(graphic);
+			//graphicsLayer.id="graphicsLayer";
+			//agsMap.addLayers([]);
+			//agsMap.reorderLayer(graphicsLayer, agsMap.layerIds.length+1);
+			//agsMap.centerAndZoom(pt,5);
+			//var str="";
+			//str=agsMap.layerIds.join(",");
+			//graphicsLayer=agsMap.getLayer("graphicsLayer");
+			//var gArr=graphicsLayer.graphics;
+			//return;
+			
+			var dmdz_xm92="http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_dmdz/MapServer/0";
+			var lineUrl="http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_dlxt/MapServer/2";//OBJECTID<400
+			var polygonUrl="http://192.168.15.83:6080/arcgis/rest/services/ApvlMap/xm_sghy_spxmbjtc/MapServer/0";
+			var spxm="http://192.168.15.83:6080/arcgis/rest/services/test/old_spxm/MapServer/0";
+			var queryTask = new esri.tasks.QueryTask(spxm);
+			var query = new esri.tasks.Query();
+			query.returnGeometry = true;
+			query.outFields = ["*"];
+			query.where = "FID<80";
+			queryTask.execute(query,function(result){
+				var features = result.features;
+				if(features.length > 0){
+					var bdPointArr=[];
+					for(var i=0;i<features.length;i++){
+						var f=features[i];
+						if(f.attributes["FID"]=='78'){
+							var geo=f.geometry;
+							if(geo.type=="point"){
+								p = new esri.geometry.Point(geo.x+7391308.319 ,geo.y-1041012.69, new esri.SpatialReference({ wkid: 102100 }));
+								textSymbol.setText(f.attributes["FID"]);
+								var graphic = new esri.Graphic(p,textSymbol,null);
+								
+							}else if(geo.type=="polyline"){
+								var geoLine=getLine(geo);
+								p = new esri.geometry.Point(geoLine.paths[0][0][0] ,geoLine.paths[0][0][1], new esri.SpatialReference({ wkid: 102100 }));
+							   graphic = new esri.Graphic(geoLine,outline,null);
+							}else if(geo.type=="polygon"){
+								var geoPolygon=getPolygon(geo);
+								p = new esri.geometry.Point(geoPolygon.rings[0][0][0] ,geoPolygon.rings[0][0][1], new esri.SpatialReference({ wkid: 102100 }));
+							   graphic = new esri.Graphic(geoPolygon,fillSymbol,null);
+							}
+							
+							
+							graphicsLayer.add(graphic);
+							//agsMap.centerAt(p);
+							agsMap.centerAndZoom(p,14);
+							//break;
+						}
+					}
+			    	    
+			    	//pointsArray=wareGpsPointsBeforeSend(bdPointArr);
+			    	//myTransMore(pointsArray[posIndex],0,"callback1");
+			    	
+				}
+				else{
+					return;
+				}
+
+			},
+			function(error){
+				alert("aa");
+			});
+		}
+        
+    </script>
+</head>
+<body onload="loadMap();">
+<div id="mapDiv">
+    <div class="base-map">
+    	<div id="agmap" class="base-map-switch base-map-switch-center" onclick="showAgMap()">加载ag地图</div>
+		<div id="agmap1" class="base-map-switch base-map-switch-center" onclick="showBdMap()">加载百度地图</div>
+        <div id="vec" class="base-map-switch base-map-switch-active" onclick="showMap('vec')">地图</div>
+        <div id="img" class="base-map-switch base-map-switch-center"  onclick="showMap('img')">影像
+            <div id="ano" class="base-map-ano">
+                <input id="chkAno" type="checkbox" name="chkAno" value="chkAno" onchange="anoCtrl()"/>标注
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

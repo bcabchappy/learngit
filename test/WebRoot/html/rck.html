@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	  <!--ExtJs框架开始-->
+      <script type="text/javascript" src="../js/ext/adapter/ext/ext-base.js"></script>
+      <script type="text/javascript" src="../js/ext/ext-all.js"></script>
+      <script type="text/javascript" src="../js/ext/ext-basex.js"></script>
+     <link rel="stylesheet" type="text/css" href="../js/ext/resources/css/ext-all.css" />
+      <!--ExtJs框架结束-->
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            //----------------------继承了CheckboxGroup使其能够取 remote 数据源开始----------------------//
+            Ext.namespace("Ext.ux");
+            Ext.ux.RemoteCheckboxGroup = Ext.extend(Ext.form.CheckboxGroup, {
+                url: '',
+                boxLabel: '',
+                inputValue: '',
+                setValue: function (val) {
+                    if (val.split) {
+                        val = val.split(',');
+                    }
+                    this.reset();
+                    for (var i = 0; i < val.length; i++) {
+                        this.items.each(function (c) {
+                            if (c.inputValue == val[i]) {
+                                c.setValue(true);
+                            }
+                        });
+                    }
+                },
+                reset: function () {
+                    this.items.each(function (c) {
+                        c.setValue(false);
+                    });
+                },
+                getValue: function () {
+                    var val = [];
+                    this.items.each(function (c) {
+                        if (c.getValue() == true)
+                            val.push(c.inputValue);
+                    });
+                    return val.join(',');
+                },
+                onRender: function (ct, position) {
+                    var items = [];
+                    if (!this.items) { //如果没有指定就从URL获取
+                        Ext.Ajax.request({
+                            url: this.url,
+                            scope: this,
+                            async: false,
+                            success: function (response) {
+                                var data = Ext.util.JSON.decode(response.responseText);
+                                   var Items2 = this.items;
+                                if (this.panel) {
+                                    var columns = this.panel.items;
+                                    if (columns) {
+                                        for (var i = 0; i < columns.items.length; i++) {
+                                            column = columns.items[i];
+                                            column.removeAll();
+                                        }
+                                        Items2.clear();
+                                    }
+                                }
+                                for (var i = 0; i < data.length; i++) {
+                                    var d = data[i];
+                                    var chk = { boxLabel: d[this.boxLabel], name: this.name, inputValue: d[this.inputValue] };
+                                    items.push(chk);
+                                }
+                            }
+                        });
+                        this.items = items;
+                    }
+                    Ext.ux.RemoteCheckboxGroup.superclass.onRender.call(this, ct, position);
+                }
+            });
+            Ext.reg('remotecheckboxgroup', Ext.ux.RemoteCheckboxGroup);
+            //----------------------继承了CheckboxGroup使其能够取 remote 数据源结束----------------------//
+            var checksource = new Ext.ux.RemoteCheckboxGroup({
+                name: 'checksource',
+                boxLabel: 'name',
+                inputValue: 'id',
+                url: '../extServlet?type=ext3',
+                fieldLabel: '招聘来源',
+                style: 'padding-top:3px;height:17px;'
+            });
+
+            //创建panel
+            var panel = new Ext.Panel({
+                title: '动态复选框',
+                width: 200,
+                height: 200,
+                frame: true,
+                items: [checksource]
+            });
+
+            //创建窗体
+            var win = new Ext.Window({
+                title: '窗口',
+                id: 'window',
+                width: 476,
+                height: 374,
+                resizable: true,
+                modal: true,
+                closable: true,
+                maximizable: true,
+                minimizable: true,
+                items: [panel]
+            });
+            win.show();
+        });
+    </script>
+</head>
+<body>
+<!--
+说明：
+(1)要引用 <script type="text/javascript" src="/Ext/ext-basex.js"></script>，因为：第51行的  async: false, 设置了Ajax为同步读取数据，
+   什么是同步：什么是异步？
+   同步：client 向 service 提交请求--service 处理响应[此时client端浏览器处于假死状态]----直到 service 处理完毕后client才会程序继续顺序执行。
+   异步：client 向 service 提交请求--service 处理响应[此时client端浏览器处于活动状态，可继续执行其他程序]---处理完毕后程序插入执行，因为client的程序也在进行，所以service 端处理完了以后，如果客户端响应时会插入到当前的执行队列执行。然后顺序执行。
+   例子：A,B[向服务器发送请求],C[服务器返回请求结果],D,E为顺序执行的客户端程序。
+   同步处理：A--B--C--D--E，完全按顺序，E会等待C后再执行。
+   异步处理：A--B--D--E--C，或是 A--B--D--C--E等等，B向服务器发送请求后，D、E不会等待C的结果，而是继续执行。C什么时候有结果了，什么时候在客户端执行，随机插入。
+   为什么这里要用 同步？
+   在onRender事件处理程序时，我们在后台取出 items 数据源的时候，如果是异步，很可能在使用 items 的时候 73行 this.items = items; 会报未定义或是为空的情况。根本原因就在于，服务器端还没有给该数组赋值，客户端就开始使用，所以这里要设置成同步。
+(2)关于 /Ext/ext-basex.js 这个文件改过代码，为了支持 Firefox 12 ，如果是在其他地方下载的该文件，很可能 Firefox12 不支持。                  
+
+
+(3)var checksource = new Ext.ux.RemoteCheckboxGroup({
+    name: 'checksource',    //名称，当客户端提交的时候，服务端会根据该名称接收值，当值为多选时post 结果如下[1,2,3]，用'，'分隔。
+    boxLabel: 'name',       //显示的字段
+    inputValue: 'id',       //checkBox存的值
+    url: '/App_Ashx/Demo/Category.ashx',//数据源的地址
+    fieldLabel: '招聘来源',
+    style: 'padding-top:3px;height:17px;'
+});
+-->
+</body>
+</html>

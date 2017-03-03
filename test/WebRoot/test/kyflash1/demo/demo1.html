@@ -1,0 +1,13 @@
+<form name="cross_domain_demo">   
+<input name="title" type="text" value="æµ‹è¯•æ•°æ®">
+</form>   
+
+<a href="javascript:AjaxCrossDomainRequest('http://112.74.13.45:8083/dgsp/rest/system/getSystemMenuInfo/1080?d=1479953941870', 'POST', 'cross_domain_demo', 'mycallback()');">µ÷ÓÃ</a>
+
+<script type="text/javascript">   
+function mycallback(){   
+    alert(AjaxCrossDomainResponse);   
+}   
+</script>   
+
+<script type="text/javascript" src="../ajaxcdr.js"></script>

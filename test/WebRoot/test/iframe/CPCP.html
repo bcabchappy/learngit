@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>跨域回调页</title>
+</head>
+<body>
+	本页面应该隐藏在iframe中。无可显示内容
+	<script type="text/javascript">
+		try {
+			var hStr = window.location.hash;
+			if (hStr[0] == '#') {
+				hStr = hStr.substr(1, hStr.length - 1);
+			}
+			hStr = unescape(hStr);
+			window.top.CPJS.DoCallBack(hStr);
+		} catch (e) {
+			alert("跨域回掉错误：" + e.message + "\r\n数据内容：" + hStr);
+		}
+	</script>
+</body>
+</html>

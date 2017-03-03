@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>window.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	  <!--ExtJs框架开始-->
+      <script type="text/javascript" src="../js/ext/adapter/ext/ext-base.js"></script>
+      <script type="text/javascript" src="../js/ext/ext-all.js"></script>
+     <link rel="stylesheet" type="text/css" href="../js/ext/resources/css/ext-all.css" />
+      <!--ExtJs框架结束-->
+     <script type="text/javascript">
+          Ext.onReady(function () {
+             var form = new Ext.form.FormPanel({
+                 frame: true,
+                 title: '表单标题',
+                 style: 'margin:10px',
+                 html: '<div style="padding:10px">这里表单内容</div>'
+             });
+             var win = new Ext.Window({
+                 title: '窗口',
+                 width: 476,
+                 height: 374,
+                 html: '<div>这里是窗体内容</div>',
+                 resizable: true,
+                 modal: true,
+                 closable: true,
+                 maximizable: true,
+                 minimizable: true,
+                 items: form
+             });
+             win.show();
+         });
+     </script>
+  </head>
+  
+  <body>
+    This is my HTML page. <br>
+  </body>
+</html>

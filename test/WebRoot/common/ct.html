@@ -1,0 +1,1260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>测试</title>
+<style type="text/css">
+<!--
+body,div,ul,li {
+	padding: 0;
+	text-align: center;
+}
+
+body {
+	font: 12px "宋体";
+	text-align: center;
+}
+
+a:link {
+	color: #00F;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #00F;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #c00;
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+/*选项卡1*/
+#Tab1 {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	margin: 0 auto;
+}
+/*选项卡2*/
+#Tab2 {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	margin: 0 auto;
+}
+/*菜单class*/
+.Menubox {
+	width: 100%;
+	background: url(http://www.jb51.net/upload/small/20079299441652.gif);
+	height: 28px;
+	line-height: 28px;
+}
+
+.Menubox ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+.Menubox li {
+	float: left;
+	display: block;
+	cursor: pointer;
+	width: 114px;
+	text-align: center;
+	color: #949694;
+	font-weight: bold;
+}
+
+.Menubox li.hover {
+	padding: 0px;
+	background: #fff;
+	width: 116px;
+	border-left: 1px solid #A8C29F;
+	border-top: 1px solid #A8C29F;
+	border-right: 1px solid #A8C29F;
+	background: url(http://www.jb51.net/upload/small/200792994426548.gif);
+	color: #739242;
+	font-weight: bold;
+	height: 27px;
+	line-height: 27px;
+}
+
+.Contentbox {
+	clear: both;
+	margin-top: 0px;
+	border: 1px solid #A8C29F;
+	border-top: none;
+	height: 100%;
+	text-align: center;
+	padding-top: 8px;
+}
+-->
+</style>
+<script>
+	/*第一种形式 第二种形式 更换显示样式*/
+	function setTab(name, cursel, n) {
+		for (i = 1; i <= n; i++) {
+			var menu = document.getElementById(name + i);
+			var con = document.getElementById("con_" + name + "_" + i);
+			menu.className = i == cursel ? "hover" : "";
+			con.style.display = i == cursel ? "block" : "none";
+		}
+	}
+</script>
+
+<!-- 注意：
+flash查询中：
+１、url不包含浏览器转过意的符号，否则易出错！
+２、对数据量有限制！
+ -->
+<script src="../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../js/common/json2.js"></script>
+<script type="text/javascript" src="flashHttpService/swfobject.js"></script>
+<script type="text/javascript">
+            var swfVersionStr = "11.1.0";
+            var xiSwfUrlStr = "flashHttpService/playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "httpServiceUtil";
+            attributes.name = "httpServiceUtil";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "flashHttpService/httpServiceUtil.swf", "flashContent", 
+                "100%", "100%", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+<script type="text/javascript">
+function jsToFlex(){
+	//document.getElementById("${application}").sendRequest({p1:11,p2:22});
+	var fl=document.getElementById("httpServiceUtil");
+	if(fl){
+		fl.sendHTTPService({url:"http://192.168.15.83:8083/dgsp/rest/system/getSystemMenuInfo/1080?d=1479953941870"});
+	}else{
+		alert("swf加载失败");
+	}
+	
+}
+
+	$(function(){
+		var feature="{'displayFieldName':'','geometryType':'esriGeometryPolygon','spatialReference':{'wkid':null},'features':[{'geometry':{'rings':[[[459693.91528320312,2706431.4348754883],[459691.33532714844,2706431.2219238281],[459695.41149902344,2706432.4448852539],[459693.91528320312,2706431.4348754883]]]}}]}";
+		gpParam={clipFeatureCG:feature};
+		document.getElementById("bz").value="http://127.0.0.1:8000/proxyPage/test/common/ajax.html"+"\n"+
+				"http://127.0.0.1:8000/proxy19216815838083/dgsp/rest/system/getSystemMenuInfo/1080?d=14799539418"+"\n"+
+				"http://127.0.0.1:8000/proxy1127413458083/dgsp/rest/system/getSystemMenuInfo/1080?d=14799539418"+"\n"+
+				"http://127.0.0.1:8000/proxy1270018083/test/rest/TestRests/getAjaxData?d=2191"+"\n"+
+				"http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_xzqy/MapServer/2/query?f=json&where=1=1%20&returnGeometry=false&returnIdsOnly=false&outFields=*"+"\n"+
+				""+"\n"+
+				""+"\n";
+		var arr=[{label:"otherGet",value:"otherGet",url:"http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_xzqy/MapServer/2/query?f=json&where=1=1%20&returnGeometry=false&returnIdsOnly=false&outFields=*",param:""},
+		         {label:"otherPost",value:"otherPost",url:"http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_xzqy/MapServer/2/query?f=json&where=1=1%20&returnGeometry=false&returnIdsOnly=false&outFields=*",param:""},
+		         {label:"ajaxGet",value:"ajaxGet",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxData"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxGetWithParam",value:"ajaxGetWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxDataWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxGetWithParam2",value:"ajaxGetWithParam2",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxDataWithParam2"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"ajaxPost",value:"ajaxPost",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPost"+"?d="+Math.floor(Math.random()*10000),param:{p1:12,p2:22}},
+		         {label:"ajaxPostWithParam",value:"ajaxPostWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxPostWithParam2",value:"ajaxPostWithParam2",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"参数/67"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"ajaxJsonp",value:"ajaxJsonp",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpData"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxJsonpWithParam",value:"ajaxJsonpWithParam",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"ajaxJsonpWithParam2",value:"ajaxJsonpWithParam2",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam2"+"/"+"参数/78"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"customAjaxJsonpWithParam",value:"customAjaxJsonpWithParam",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getCustomAjaxJsonpWithParam"+"/"+"参数/78/f"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22,jsonp:'f_'}},
+		         {label:"customAjaxJsonpWithJP",value:"customAjaxJsonpWithJP",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getCustomAjaxJsonpWithParam"+"/"+"参数/78/f"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22,jsonp:'successJsonpEmptyCallback'}},
+		         {label:"formPostRequestWithParam",value:"formPostRequestWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"参数/67"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"formGetRequestWithParam",value:"formGetRequestWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxDataWithParam2"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"javaRestData",value:"javaRestData",url:"http://127.0.0.1:8083/test/rest/TestRests/getJavaRestData"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{url:"http://192.168.15.83:6080/arcgis/rest/services/ApvlMap/xm_sghy_zdxm/MapServer/0",where:"1=1",geometry:"",outFields:"*",returnGeometry:"false",p1:22,p2:22}},
+		         {label:"javaGetData",value:"javaGetData",url:"http://127.0.0.1:8083/test/rest/TestRests/getJavaGetData"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{url:"http://192.168.15.83:6080/arcgis/rest/services/ApvlMap/xm_sghy_zdxm/MapServer/0",p1:22,p2:22}},
+		         {label:"javaPostData",value:"javaPostData",url:"http://127.0.0.1:8083/test/rest/TestRests/getJavaPostData"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{url:"http://192.168.15.83:6080/arcgis/rest/services/ApvlMap/xm_sghy_zdxm/MapServer/0",p1:22,p2:22}},
+		         {label:"flashHttpService",value:"flashHttpService",param:{url:"http://192.168.15.83:8083/dgsp/rest/system/getSystemMenuInfo/1080?d=1479953941870",parms:null,restMethod:'GET',resultFormat:'text',contentType:'application/json'}},
+		         {label:"nginxProxy",value:"nginxProxy",param:{url:"http://127.0.0.1:8000/proxy19216815838083/dgsp/rest/system/getSystemMenuInfo/1080?d=14799539418",type:"GET",param:{p1:11,p2:22}}},
+		         {label:"gp",value:"gp",url:"http://192.168.15.83:6080/arcgis/rest/services/GpTool/CG_Clip/GPServer/CG_Clip/execute",param:gpParam},
+		         {label:"",value:"",url:"",param:""}];
+		for(var i=0;i<arr.length;i++){
+			document.getElementById("selAjaxTypeId").options.add(new Option(arr[i].label,arr[i].value));
+		}
+		$('#ajaxTypeData').val(JSON.stringify(arr));
+	});
+	
+	function radioCheck(event){
+//		debugger;
+//		var rad=event.currentTarget;
+//		rad.checked;
+		var arr=JSON.parse($('#ajaxTypeData').val());
+		var result=[];
+		var radios = document.getElementsByName('radio');
+        for (var i = 0; i < radios.length ; i++ )
+        {
+            if(radios[i].checked)
+            {
+            	if(radios[i].value=='all'){
+            		result=arr;
+            		break;
+            	}
+            	for (var j=0;j<arr.length;j++){
+            		if(arr[j].value.toLowerCase().indexOf(radios[i].value.toLowerCase())>-1){
+            			result.push(arr[j]);
+            		}
+            	}
+            }
+        }
+        document.getElementById("selAjaxTypeId").options.length=0;    
+        for(var k=0;k<result.length;k++){
+			document.getElementById("selAjaxTypeId").options.add(new Option(result[k].label,result[k].value));
+		}
+        document.getElementById("selAjaxTypeId").options[0].selected=true;
+        ajaTypeChoice(null);
+	}
+	
+	function ajaTypeChoice(event){
+//		debugger;
+//		var sel=event.currentTarget.options;//[option, option, selectedIndex: 1]
+//		var selObj=event.currentTarget;
+		var selects=document.getElementById("selAjaxTypeId");
+		var index = selects.selectedIndex; // 选中索引
+		var text = selects.options[index].text; // 选中文本
+		var selValue = selects.options[index].value; // 选中值
+		var arr=$('#ajaxTypeData').val();
+		arr=JSON.parse(arr);
+		if(selValue=='otherGet'||selValue=='otherPost'){
+			document.getElementById('isDefaultInput').checked=false;
+			document.getElementById("queryUrl").disabled = false;
+			document.getElementById("paramArea").disabled = false;
+		}else{
+			document.getElementById('isDefaultInput').checked=true;
+			document.getElementById("queryUrl").disabled = true;
+			document.getElementById("paramArea").disabled = true;
+		}
+		var selp={};
+		for(var i=0;i<arr.length;i++){
+			if(arr[i].value==selValue){
+				selp=arr[i];
+				break;
+			}
+		}
+		$('#queryUrl').val(selp.url);
+		$('#paramArea').val(JSON.stringify(selp.param));
+		$('#selectedAjaxTypeData').val(JSON.stringify(selp));
+		
+	}
+	
+	function doAjaxGet(p){
+		$.ajax({
+	          url:p.url,
+	          data: '',
+	          dataType:"json",
+	          type:"GET", 
+	          success:function(data){
+	        	  document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	    document.getElementById('result1Div').style['backgroundColor']='red';
+	        	    document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxGetWithParam(p){
+		$.ajax({
+	          url:p.url,
+	          data:p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doAjaxGetWithParam2(p){
+		$.ajax({
+	          url:p.url,
+	          data:p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doAjaxPost(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doAjaxPostWithParam(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doAjaxPostWithParam2(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doFormPostRequestWithParam(p){
+		var post=function(url,param){
+		    var temp = document.createElement("form");
+		    temp.action = url;
+		    temp.method = "post";
+		    temp.style.display = "none";
+		    for (var k in param) {
+		       var opt = document.createElement("textarea");
+		       opt.name = k;
+		       opt.value = param[k];
+		       temp.appendChild(opt);
+		    }
+		    document.body.appendChild(temp);
+		    temp.submit();
+		};
+
+		var apiUrl = p.url + '&callback=?';
+		var params = {"p1":11, "p2":22};
+	     // 直接调用post方法即可
+	     post(apiUrl, params);
+	}
+	
+	function doFormGetRequestWithParam(p){
+		var post=function(url,param){
+		    var temp = document.createElement("form");
+		    temp.action = url;
+		    temp.method = "get";
+		    temp.style.display = "none";
+		    for (var k in param) {
+		       var opt = document.createElement("textarea");
+		       opt.name = k;
+		       opt.value = param[k];
+		       temp.appendChild(opt);
+		    }
+		    document.body.appendChild(temp);
+		    temp.submit();
+//		    history.go(-1);
+		};
+
+		var apiUrl = p.url + '&callbackparam=successFormGetRequestWithParam';
+		var params = {"p1":11, "p2":22};
+	     // 直接调用post方法即可
+	     post(apiUrl, params);
+	}
+	
+	function doJavaGetData(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	function doJavaPostData(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	function doJavaRestData(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doNginxProxy(p){
+		$.ajax({
+	          url:p.param.url,
+	          data: p.param.param,
+	          dataType:"json",
+	          type:p.param.type, 
+	          success:successCallback,
+	          error:errorCallback
+	       });
+	}
+	
+	function doFlashHttpService(p){
+		if(!p || !p.hasOwnProperty('param')||!p.param.hasOwnProperty('url')){
+			alert("参数有误，无法执行");
+			return;
+		}
+		var fl=document.getElementById("httpServiceUtil");
+		if(fl){
+			var url="http://192.168.15.83:8083/dgsp/rest/system/getSystemMenuInfo/1080?d=1479953941870";
+			fl.sendHTTPService(p.param);
+		}else{
+			alert("httpServiceUtil.swf加载失败");
+		}
+	}
+	
+	function sendHttpServiceResultToJs(data){
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+  	    document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	function successFormGetRequestWithParam(data){
+//		debugger;
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+  	    document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	function doAjaxJsonp(p){
+		var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpData";
+		 url=encodeURI(encodeURI(p.url)); 
+		$.ajax({
+           type: "get",
+           url: url,
+           data: '',
+           jsonp:"callbackparam",
+           jsonpCallback:"successAjaxJsonpCallback",
+           dataType: "jsonp",
+           success: function(data, textStatus, jqXHR){
+        	   this;//param
+        	   document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+         	   document.getElementById('result1').value=JSON.stringify(data);
+  //          	debugger;
+//            	var aa=data;
+            },
+            statusCode:{200:function(d1,d2,d3){
+            	//参数类似error
+            	//d1:{readyState: 4, status: 200, statusText: "success"}
+    	    	//d2 = "parsererror"
+  //          	debugger;
+            }},
+           error:errorCallback
+       });
+		
+	}
+	
+	function successAjaxJsonpCallback(data){
+//		debugger;
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+  	    document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	/**
+		带参数的跨域
+	**/
+	function doAjaxJsonpWithParam(p){
+		
+		$.getJSON(p.url+ "&callbackparam=?",p.param, function(data) { 
+			document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	  	    document.getElementById('result1').value=JSON.stringify(data);
+//			debugger;
+		});
+		return;
+		var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam";
+		 url=encodeURI(encodeURI(p.url)); 
+		$.ajax({
+           type: "get",
+           url: url,
+           processData:false,
+           data: p.param,
+           jsonp:"callbackparam",
+           jsonpCallback:"successAjaxJsonpWithParamComeback",
+           dataType: "jsonp",
+//           success:successJsonpCallback,
+           error:errorCallback
+       });
+	}
+	
+	function successAjaxJsonpWithParamComeback(data){
+//		debugger;
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+  	    document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	/**
+	带参数的跨域
+**/
+function doAjaxJsonpWithParam2(p){
+	var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam"+"/9";
+	 url=encodeURI(encodeURI(p.url)); 
+	$.ajax({
+       type: "get",
+       url: url,
+       data: p.param,
+       jsonp:"callbackparam",
+//       jsonpCallback:"successAjaxJsonpWithParam2",//可以不用此参数，直接使用success方法
+       dataType: "jsonp",
+       success: function(data, textStatus, jqXHR){
+    	   this;//param
+    	   document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+     	   document.getElementById('result1').value=JSON.stringify(data);
+//        	debugger;
+//        	var aa=data;
+        },
+        statusCode:{200:function(d1,d2,d3){
+        	//参数类似error
+        	//d1:{readyState: 4, status: 200, statusText: "success"}
+	    	//d2 = "parsererror"
+ //       	debugger;
+        }},
+       error:errorCallback
+   });
+}
+	
+	//后台优先使用jsonp属性作为jsonp值
+	function doCustomAjaxJsonpWithParam(p){
+		var url;
+		url=encodeURI(encodeURI(p.url)); 
+		if(p.param.hasOwnProperty('jsonp')){
+			if(!p.param.jsonp){
+				p.param.jsonp='';
+			}
+		}else{
+			p.param.jsonp='';
+		}
+		$.ajax({
+	       type: "get",
+	       url: url,
+	       data: p.param,
+	       processData:false,
+//	       jsonp:p.param.jsonp,//后台f_jsonp属性
+	       jsonpCallback:"successCustomAjaxJsonpWithParam",//successJsonpCallback
+	       dataType: "jsonp",
+	       success: function(data){
+	        	debugger;
+	        	document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	      	    document.getElementById('result1').value=JSON.stringify(data);
+	        },
+	       statusCode:{200:function(XMLHttpRequest, textStatus, errorThrown){
+	        	//d1:{readyState: 4, status: 200, statusText: "success"}
+		    	//d2 = "parsererror"
+	        	debugger;
+	        	if(XMLHttpRequest.statusText=="success" && XMLHttpRequest.responseText!=undefined){//hasOwnProperty
+	        		document.getElementById('result1Div').style['backgroundColor']='#ADFF2F';
+    	    	    document.getElementById('result1').value=XMLHttpRequest.responseText;
+	    	    }else{
+	    	    	 document.getElementById('result1Div').style['backgroundColor']='red';
+	    	 	     document.getElementById('result1').value=XMLHttpRequest.status+":"+XMLHttpRequest.statusText+"\n"+errorThrown;
+	    	    }
+	        }},
+	       error:function(XMLHttpRequest, textStatus, errorThrown) {
+	   	    // 通常 textStatus 和 errorThrown 之中
+	   	    // 只有一个会包含信息
+	   	    this; // 调用本次AJAX请求时传递的options参数
+	   	    debugger;
+		   	 if(XMLHttpRequest.statusText=="success" && XMLHttpRequest.responseText!=undefined){//hasOwnProperty
+	     			document.getElementById('result1Div').style['backgroundColor']='#ADFF2F';
+		    	    document.getElementById('result1').value=XMLHttpRequest.responseText;
+	 	    }else{
+	 	    	 document.getElementById('result1Div').style['backgroundColor']='red';
+	 	 	     document.getElementById('result1').value=XMLHttpRequest.status+":"+XMLHttpRequest.statusText+"\n"+errorThrown;
+	 	    }
+	   	   
+	   	}
+	   });
+	}
+	
+	function successCustomAjaxJsonpWithParam(){
+		debugger;
+	}
+	function successCustomAjaxJsonpWithParam(data){
+		debugger;
+    	document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+  	    document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	//后台优先使用jsonp属性作为jsonp值
+	function doCustomAjaxJsonpWithJP(p){
+		var url='';
+		url=encodeURI(encodeURI(p.url)); 
+		if(p.param.hasOwnProperty('jsonp')){
+			if(!p.param.jsonp){
+				p.param.jsonp='';
+			}
+		}else{
+			p.param.jsonp='';
+		}
+		var urlSuffix='';
+		if(url.indexOf('?')>-1){
+			urlSuffix="&"+p.param.jsonp+"=successJsonpCallback";
+		}else{
+			urlSuffix="?"+p.param.jsonp+"=successJsonpCallback";
+		}
+		$.ajax({
+	       type: "get",
+	       cache:false,
+	       processData:false,
+	       context:this,//设置success中的this为当前中的this或某一节点
+	       crossDomain:true,//跨域请求为true如果你想强制跨域请求（如JSONP形式）同一域，设置crossDomain为true。
+	       url: url+urlSuffix,
+	       data: p.param,
+	       jsonp:p.param.jsonp,//后台f_jsonp属性.在一个jsonp请求中重写回调函数的名字。这个值用来替代在"callback=?"这种GET或POST请求中URL参数里的"callback"部分，比如{jsonp:'onJsonPLoad'}会导致将"onJsonPLoad=?"传给服务器。
+	       jsonpCallback:"successJsonpCallback",
+	       dataType: "jsonp",
+	       success: function(data, textStatus, jqXHR){
+	    	   this;//param
+	        	debugger;
+//	        	var aa=data;
+	        },
+	        statusCode:{200:function(d1,d2,d3){
+	        	//参数类似error
+	        	//d1:{readyState: 4, status: 200, statusText: "success"}
+		    	//d2 = "parsererror"
+	        	debugger;
+	        }},
+	       error:errorCallback
+	   });
+	}
+	
+	function successJsonpCallback(data){
+		debugger;
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+		document.getElementById('result1').value=JSON.stringify(data);
+	}
+	//被当作方法执行
+	function successJsonpCallback(){
+		debugger;
+	}
+	/**
+	ajax成功方法
+	**/
+	function successCallback(data){
+		document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+		document.getElementById('result1').value=JSON.stringify(data);//
+	}
+	
+	/**
+	ajax错误方法
+	**/
+	function errorCallback(XMLHttpRequest, textStatus, errorThrown) {
+	    // 通常 textStatus 和 errorThrown 之中
+	    // 只有一个会包含信息
+	    this; // 调用本次AJAX请求时传递的options参数
+	    debugger;
+	    if(XMLHttpRequest.readyState=='4' && XMLHttpRequest.status=='200'&&
+	    		textStatus=='parsererror' && errorThrown){//hasOwnProperty
+	    	if(XMLHttpRequest.responseText!=undefined){
+	    		document.getElementById('result1Div').style['backgroundColor']='#ADFF2F';
+	    	    document.getElementById('result1').value=XMLHttpRequest.responseText;
+	    	}
+	    }else{
+	    	 document.getElementById('result1Div').style['backgroundColor']='red';
+	 	     document.getElementById('result1').value=XMLHttpRequest.status+":"+XMLHttpRequest.statusText+"\n"+errorThrown;
+	    }
+	   
+	}
+	
+	function successJsonpEmptyCallback(){
+		debugger;
+	}
+	//
+	function successJsonpEmptyCallback(data){
+		document.getElementById('result1Div').style['backgroundColor']='#ADFF2F';
+	    document.getElementById('result1').value=JSON.stringify(data);
+		debugger;
+	}
+	
+	function doQuery(event){
+	//	debugger;
+		document.getElementById('hsLabel').innerHTML="";
+		document.getElementById('result1Div').style['backgroundColor']='#808080';
+		var str=document.getElementById('selectedAjaxTypeData').value;
+		var selp;
+		try{
+				selp=JSON.parse(str);
+				if(!document.getElementById('isDefaultInput').checked){
+					selp={label:selp.label,
+							value:selp.value,
+							url:trim(document.getElementById('queryUrl').value),
+							param:JSON.parse($.trim($('#paramArea').val()))};
+				}
+			} catch (e) {
+			 if (e instanceof EvalError) {
+		//	     console.log(e.name + ":" + e.message);
+			 }else if (e instanceof RangeError) {
+		//		 console.log(e.name + ": " + e.message);
+			 }else if (e instanceof ReferenceError) {
+	//			 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof SyntaxError) {
+//				 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof TypeError) {
+	//			 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof URIError) {
+		//s		 console.log(e.name + ": " + e.message);
+			 } 
+			 // etc 
+			}
+		if(selp.value=='ajaxGet'){
+			doAjaxGet(selp);
+		}else if(selp.value=='ajaxPost'){
+			doAjaxPost(selp);
+		}else if(selp.value=='ajaxGetWithParam'){
+			doAjaxGetWithParam(selp);
+		}else if(selp.value=='ajaxPostWithParam'){
+			doAjaxPostWithParam(selp);
+		}else if(selp.value=='ajaxJsonp'){
+			doAjaxJsonp(selp);
+		}else if(selp.value=='ajaxJsonpWithParam'){
+			doAjaxJsonpWithParam(selp);
+		}else if(selp.value=='ajaxGetWithParam2'){
+			doAjaxGetWithParam2(selp);
+		}else if(selp.value=='ajaxPostWithParam2'){
+			doAjaxPostWithParam2(selp);
+		}else if(selp.value=='ajaxJsonpWithParam2'){
+			doAjaxJsonpWithParam2(selp);
+		}else if(selp.value=='otherGet'){
+			doOtherGet(selp);
+		}else if(selp.value=='otherPost'){
+			doOtherPost(selp);
+		}else if(selp.value=='customAjaxJsonpWithParam'){
+			doCustomAjaxJsonpWithParam(selp);
+		}else if(selp.value=='customAjaxJsonpWithJP'){
+			doCustomAjaxJsonpWithJP(selp);
+		}else if(selp.value=='formPostRequestWithParam'){
+			doFormPostRequestWithParam(selp);
+		}else if(selp.value=='formGetRequestWithParam'){
+			doFormGetRequestWithParam(selp);
+		}else if(selp.value=='javaGetData'){
+			doJavaGetData(selp);
+		}else if(selp.value=='javaPostData'){
+			doJavaPostData(selp);
+		}else if(selp.value=='javaRestData'){
+			doJavaRestData(selp);
+		}else if(selp.value=='flashHttpService'){
+			doFlashHttpService(selp);
+		}else if(selp.value=='nginxProxy'){
+			doNginxProxy(selp);
+		}else if(selp.value=='gp'){
+			callGPService(selp);
+		}
+	}
+	
+	function doOtherGet(p){
+		var url='';
+		if(typeof(p.url) == 'string' ){
+			url=p.url;
+		}else{
+			url=''+p.url;
+		}
+		$.ajax({
+	          url:url,//encodeURIComponent(p.url),
+	          data: p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:function(data){
+	        	  debugger;
+	        	  var str=JSON.stringify(data);
+	        	  document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	    document.getElementById('result1Div').style['backgroundColor']='red';
+	        	  document.getElementById('result1').value=XMLHttpRequest.status+":"+XMLHttpRequest.statusText;
+	        	}
+	       });
+	}
+	
+	function doOtherPost(p){
+		var url='';
+		if(typeof(p.url) == 'string' ){
+			url=p.url;
+		}else{
+			url=''+p.url;
+		}
+		$.ajax({
+	          url:url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:function(data){
+	        	  var str=JSON.stringify(data);
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	        	  document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	    document.getElementById('result1Div').style['backgroundColor']='red';
+	        	  document.getElementById('result1').value=XMLHttpRequest.status+":"+XMLHttpRequest.statusText;
+	        	}
+	       });
+	}
+	
+	function chkClick(event){
+//		jsToFlex();
+//		var chk=event.currentTarget;//IE中无效
+// 		var chk=document.getElementsByName("chkParam");
+// 		document.getElementById('selectedAjaxTypeData').value;
+// 		chk.checked;
+        var inputs = document.getElementsByTagName("input");
+     	for (var i = 0; i < inputs.length; i++) {
+         	if (inputs[i].type == "checkbox") {
+         		if(inputs[i].value=="isDefaultUrlAndParam"){
+                 	if (inputs[i].checked) {
+                 		document.getElementById("queryUrl").disabled = true;
+        				document.getElementById("paramArea").disabled = true;
+                 	}else{
+                 		document.getElementById("queryUrl").disabled = false;
+        				document.getElementById("paramArea").disabled = false;
+                 	}
+         		}
+         	}
+     	}
+		/* debugger; */
+	}
+	
+	function addChk(){
+		var executerDiv=$("executerDiv");
+	    executerDiv.innerHTML="";
+	    var ul=document.createElement("ul");
+	    for(var i=0;i<tableDatas.length;i++){
+	        var arr=tableDatas[i];
+
+	        // 加入复选框
+	        var checkBox=document.createElement("input");
+	        checkBox.setAttribute("type","checkbox");
+	        checkBox.setAttribute("id",arr[0]);
+	        checkBox.setAttribute("name", arr[1]);
+
+	        var li=document.createElement("li");
+	        li.appendChild(checkBox);        
+	        li.appendChild(document.createTextNode(arr[1]));
+	        ul.appendChild(li);        
+	    }    
+
+	    executerDiv.appendChild(ul);
+	}
+	
+	function cancelHandle(event){
+		document.getElementById('result1').value='';
+		document.getElementById('result2').value='';
+	}
+	
+	function trim(str)
+    { 
+        return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	}
+	
+	function jsonStringify(data,space){
+	    var seen=[];
+	    return JSON.stringify(data,function(key,val){
+	        if(!val||typeof val !=='object'){
+	            return val;
+	        }
+//	        if(seen.indexOf(val)!==-1){
+//	            return '[Circular]';
+//	        }
+	        seen.push(val);
+	        return val;
+	    },space);
+	}
+	
+	function formatJson(event){
+		var obj=JSON.parse(document.getElementById('result1').value);
+		var str=jsonStringify(obj,4);
+		document.getElementById('result2').value=str;
+	}
+
+</script>
+<style type="text/css">
+body {
+	text-align: center
+}
+
+.contaner {
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	background-color: #fdcbcb;
+	border: #fa9696 solid 1px;
+	border-radius: 3px;
+}
+
+.typeChoice {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.urlInput {
+	width: 600px;
+}
+
+.paramDivC {
+	margin-top: 5px;
+	height: 150px;
+	/* 		line-height:100px; */
+	overflow: hidden;
+	border: 1px solid #FF0099;
+	/* 		text-align:center; */
+	/* 		display: table-cell;  */
+	/* 		vertical-align:middle; */
+	position: relative;
+}
+
+.paramAreaC {
+	float: left;
+	height: 120px;
+	width: 600px;
+	margin-left: 5px;
+	/* 		margin:0 auto;  */
+	background-color: #99CCFF;
+	border: #fa9696 solid 1px;
+	border-radius: 3px;
+	/* 		line-height:15px; */
+	overflow: hidden;
+	border: 1px solid #FF0099;
+	display: inline-block;
+	/* 		position:absolute; */
+}
+
+.resultDiv {
+	display: table-row;
+	width: 100%;
+	height: 250px;
+	border: 1px solid #99FF99;
+	font-size: 14px;
+	text-align: left;
+	vertical-align: middle;
+	/* 		display:table-row;  */
+	overflow: hidden;
+}
+
+.result1Div {
+	float: left;
+	display: table-cell;
+	/* 		display:inline-block; */
+	margin-left: 10px;
+	width: 500px;
+	height: 100%;
+	background-color: #cc00cc;
+	vertical-align: middle;
+	/* 		text-align:center; */
+	/* 		margin:0px auto; */
+}
+
+.result2Div {
+	float: left;
+	margin-left: 10px;
+	/* 		margin-left:520px; */
+	/* 		margin-top:-200px; */
+	/* 		display:inline-block; */
+	display: table-cell;
+	height: 100%;
+	width: 500px;
+	background-color: #660099;
+	vertical-align: middle;
+	text-align: center;
+	/* 		margin:0px auto; */
+}
+
+.result1 {
+	display: inline-block;
+	height: 230px;
+	width: 400px;
+	background-color: #CC99FF;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.result2 {
+	display: inline-block;
+	height: 230px;
+	width: 400px;
+	background-color: #6666FF;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+fieldset {
+	width: 300px;
+	height: 80px;
+	display: inline-block;
+	background: rgba(255, 255, 255, .3);
+	border-color: rgba(255, 255, 255, .6);
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 10px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+}
+
+fieldset legend {
+	color: #302A2A;
+	font: bold 16px/2 Verdana, Geneva, sans-serif;
+	font-weight: bold;
+	text-align: left;
+	text-shadow: 2px 2px 2px rgb(88, 126, 156);
+}
+
+#executerDiv {
+	
+}
+
+#executerDiv ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	vertical-align: middle;
+}
+
+#executerDiv li {
+	float: left;
+	display: block;
+	width: 100px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #666666;
+	text-decoration: none;
+	text-align: left;
+	background: #ffffff;
+}
+</style>
+
+<script type="text/javascript">
+	function callGPService(p){
+		var url="http://192.168.15.83:6080/arcgis/rest/services/test/impShp/GPServer/impShp/execute";
+		var param={"远程shp文件地址":"http://192.168.15.83:8083/dgsp/upload/shp/shp1.shp"};//shp_m1.shp
+		url="http://192.168.15.83:6080/arcgis/rest/services/test/impCad/GPServer/importCad/execute";
+		param={"远程cad文件地址":"http://192.168.15.83:8083/dgsp/upload/DWG/shp_m1.dwg"};
+		
+		url="http://192.168.15.83:6080/arcgis/rest/services/GpTool/CG_Clip/GPServer/CG_Clip/execute";
+		var feature="{ "
+		+"  'displayFieldName': '',"
+		+"	'geometryType': 'esriGeometryPolygon',"
+		+"	'spatialReference': {"
+		+"		'wkid': null"
+		+"	},+"
+		+"	'features': [{'geometry': {"
+		+"		'rings': [[[459693.91528320312,"
+		+"		2706431.4348754883],"
+		+"		[459691.33532714844,"
+		+"		2706431.2219238281],"
+		+"		[459695.41149902344,"
+		+"		2706432.4448852539],"
+		+"		[459693.91528320312,"
+		+"		2706431.4348754883]]]"
+		+"	}}]"
+		+"}";
+		feature="{'displayFieldName':'','geometryType':'esriGeometryPolygon','spatialReference':{'wkid':null},'features':[{'geometry':{'rings':[[[459693.91528320312,2706431.4348754883],[459691.33532714844,2706431.2219238281],[459695.41149902344,2706432.4448852539],[459693.91528320312,2706431.4348754883]]]}}]}";
+		param={clipFeatureCG:feature};
+		url=p.url;
+		param=p.param;
+		type="POST";
+		var startDate=new Date();
+		var endDate;
+		$.ajax({
+	          url:url,
+	          data: param,
+	          dataType:"html",//json
+	          type:type, 
+	          success:function(data){
+	        	  var str=JSON.stringify(data);
+	        	  
+	        	  re=/<pre>{([\s\S]*)}<\/pre>/g;
+	        	  var arr=str.match(re);
+	        	  if(arr && arr.length>0){
+	        		  str=arr[0];
+	        		  re=/{([\s\S]*)}/g;
+	        		  arr=str.match(re);
+	        		  str=arr[0];
+	        	  }else{
+	        		  return;
+	        	  }
+	        	  str=str.replace(/\\\\\\/ig,""); //去除///
+	        	  str=str.replace(/\\n/ig,""); //去除\n
+	        	  str=str.replace(/\\/ig,""); //去除\
+	        	  
+	        	  endDate=new Date();
+	        	  var s=getMS(startDate,endDate);
+	        	  s=s/1000;
+	        	  document.getElementById('hsLabel').innerHTML="耗时:"+s+"秒";
+	        	  document.getElementById('hsLabel').style['backgroundColor']='#CC00CC';
+	        	  document.getElementById('result1Div').style['backgroundColor']='#32CD32';
+	          	  document.getElementById('result1').value=str;
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	  document.getElementById('result1Div').style['backgroundColor']='red';
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+		
+	}
+	
+	function getMS(startDate,endDate){
+		var s=startDate.getMilliseconds()+startDate.getSeconds()*1000+startDate.getMinutes()*60*1000+startDate.getHours()*60*60*1000;//毫秒
+		var e=endDate.getMilliseconds()+endDate.getSeconds()*1000+endDate.getMinutes()*60*1000+endDate.getHours()*60*60*1000;//毫秒//毫秒
+		var result=e-s;
+		return result;
+	}
+</script>
+</head>
+<body>
+
+	<div id="Tab1">
+		<div class="Menubox">
+			<ul>
+				<li id="one1" onClick="setTab('one',1,4)" class="hover">ajax测试</li>
+				<li id="one2" onClick="setTab('one',2,4)">新闻2</li>
+				<li id="one3" onClick="setTab('one',3,4)">新闻3</li>
+				<li id="one4" onClick="setTab('one',4,4)">新闻4</li>
+			</ul>
+		</div>
+		<div class="Contentbox">
+			<div id="con_one_1" class="hover">
+				<input id='ajaxTypeData' type="hidden"></input> <input
+					id='selectedAjaxTypeData' type="hidden"></input>
+				<div id='contaner' class='contaner'>
+
+					<div class='typeChoice'>
+						<div>
+							<label style="display:inline-block;float:left;">备注:</label>
+							<textarea id="bz" disabled style="height:120px;width:100%;"
+								rows="5" cols="20"></textarea>
+						</div>
+						<fieldset>
+							<legend>请求类型</legend>
+							<label><input type="radio" name="radio" value="all" checked="checked" onclick="radioCheck(event)"></input>all</label> 
+							<label><input type="radio" name="radio" value="get" onclick="radioCheck(event)"></input>get</label> 
+							<input type="radio" name="radio" value="post" onclick="radioCheck(event)"></input><label>post</label>
+							<input type="radio" name="radio" value="jsonp" onclick="radioCheck(event)"></input><label>getJsonp</label> 
+							<input type="radio" name="radio" value="flash" onclick="radioCheck(event)"></input><label>flash</label> 
+							<input type="radio" name="radio" value="nginx" onclick="radioCheck(event)"></input><label>nginx</label> 
+							<input type="radio" name="radio" value="gp" onclick="radioCheck(event)"></input><label>gp</label> 
+							
+							<input name="" value="1" type="checkbox" checked="checked" onclick="chkClick(event)"></input>get 
+							<input name="33" value="1" type="checkbox" onclick="chkClick(event)"></input>post
+							<!-- 	         	 <input type="checkbox" disabled = "disabled" /> -->
+						</fieldset>
+						<select id='selAjaxTypeId' onclick=''
+							onchange='ajaTypeChoice(event)'>
+							<option value="0" selected>==请选择==</option>
+						</select> <input name="chkParam" id='isDefaultInput'
+							value="isDefaultUrlAndParam" type="checkbox" checked='checked'
+							onclick="chkClick(event)"></input>使用默认地址及参数 <input id='queryUrl'
+							class='urlInput' disabled type='text'
+							value='http://127.0.0.1:8083/test/rest/TestRests/test/p1'></input>
+					</div>
+
+					<!-- 		参数 -->
+					<div id='paramDiv' class='paramDivC'>
+						<label style="float:left;margin-left:5px;">json参数：</label>
+						<textarea id='paramArea' disabled class='paramAreaC' rows="5"
+							cols="20"></textarea>
+
+					</div>
+					<!-- 		操作 -->
+					<div style="clear;margin-top:5px;margin-bottom:5px;text-align:left;vertical-align:left;">
+						<button id='queryBtn' style="margin-left:100px;" onclick='doQuery(event)'>执行</button>
+						<button id='cancelBtn' onclick='cancelHandle(event)'>清除结果</button>
+						<button id='cancelBtn' onclick='formatJson(event)'>格式化json数据</button>
+						<label id="hsLabel" style="margin-left:50px;background-color:#cc00cc;"></label>
+					</div>
+					<!-- 		结果 -->
+					<div id='resultDiv' class='resultDiv'>
+						<div id='result1Div' class='result1Div'>
+							<span style="margin-top:10px;margin-left:10px;">结果1：</span>
+							<textarea id='result1' class='result1' rows="5" cols="10"></textarea>
+						</div>
+
+						<div id='result2Div' class='result2Div'>
+							<span style="padding-top:-150px;">结果2：</span>
+							<textarea id='result2' class='result2' rows="5" cols="10"></textarea>
+						</div>
+					</div>
+				</div>
+				<div id="flashContent" style="display:none;"></div>
+				<noscript>
+					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+						width="100%" height="100%" id="httpServiceUtil">
+						<param name="movie" value="httpServiceUtil.swf" />
+						<param name="quality" value="high" />
+						<param name="bgcolor" value="#ffffff" />
+						<param name="allowScriptAccess" value="sameDomain" />
+						<param name="allowFullScreen" value="true" />
+						<!--[if !IE]>-->
+						<object type="application/x-shockwave-flash"
+							data="flashHttpService/httpServiceUtil.swf" width="100%"
+							height="100%">
+							<param name="quality" value="high" />
+							<param name="bgcolor" value="#ffffff" />
+							<param name="allowScriptAccess" value="sameDomain" />
+							<param name="allowFullScreen" value="true" />
+							<!--<![endif]-->
+							<!--[if gte IE 6]>-->
+							<!--<![endif]-->
+							<!--[if !IE]>-->
+						</object>
+						<!--<![endif]-->
+					</object>
+				</noscript>
+
+			</div>
+			<div id="con_one_2" style="display:none">
+			
+				<table width="100%" height="100%" border="0">
+					<tr>
+						<td colspan="2" style="background-color:#99bbbb;">
+							<h1>Main Title of Web Page</h1>
+						</td>
+					</tr>
+
+					<tr valign="top">
+						<td style="background-color:#ffff99;width:50px;text-align:top;">
+							
+						</td>
+						<td style="background-color:#EEEEEE;height:400px;width:600px;text-align:top;">
+							<textarea id="gpResultText" style="width:600px;height:200px;" rows="10" cols="12"></textarea>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2"
+							style="background-color:#99bbbb;text-align:center;">
+							Copyright W3School.com.cn
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="con_one_3" style="display:none">新闻列表3</div>
+			<div id="con_one_4" style="display:none">新闻列表4</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

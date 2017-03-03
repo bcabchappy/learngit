@@ -1,0 +1,82 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>JS动态添加删除option</title>
+<script>
+//动态删除select中的所有options：
+function delAllOptions(){
+      document.getElementById("user_dm").options.length=0;
+}
+//动态删除select中的某一项option：
+function delOneOption(indx){
+      document.getElementById("user_dm").options.remove(indx);
+}
+
+// 动态添加select中的项option:
+function addOneOption(){
+      //document.getElementById("user_dm").options.add(new Option(2,"mytest"));
+  
+   var selectObj=document.getElementById("user_dm");
+   alert(selectObj.length);
+   selectObj.options[selectObj.length] = new Option("mytest", "2");
+}
+
+//添加选项
+
+function addOption(pos){
+	var objSelect=document.getElementById("mySelect");
+    // 取得字段值
+   //var strName = document.myForm.myOptionName.value;
+    // var strValue = document.myForm.myOptionValue.value;
+    // 建立Option对象
+    var objOption = new Option("李高灰","bbbbbbbbb");
+    if (pos == -1&& pos > objSelect.options.length)
+       objSelect.options[objSelect.options.length] = objOption;
+    else
+       objSelect.add(objOption, pos);
+}
+
+ 
+
+ 
+
+// 删除
+
+function deleteOption(type){
+
+var objSelect=document.getElementById("mySelect");
+    if (type == true)
+       objSelect.options[objSelect.selectedIndex] = null;
+    else
+       objSelect.remove(objSelect.selectedIndex);
+}
+
+// 显示选项信息
+
+function showOption(){
+	var objSelect=document.getElementById("mySelect");
+    var name = objSelect.options[objSelect.selectedIndex].text;
+    var value = objSelect.options[objSelect.selectedIndex].value;
+    alert(name + " = " + value);
+}
+
+ 
+
+//动态删除select中的所有options：
+
+function clearAllOptions(){
+   var objSelect=document.getElementById("mySelect");
+   objSelect.options.length=0;
+}
+</script>
+</head> 
+<body>
+<select id="user_dm" name="user_dm">
+<option value="0" selected>==请选择人员==</option>
+<option value="1">test</option>
+</select><br>
+<input type="button" onClick="addOneOption()" value="添加">
+<input type="button" onClick="delOneOption(1)" value="删除第一个">
+<input type="button" onClick="delAllOptions()" value="清空">
+</body>
+</html>

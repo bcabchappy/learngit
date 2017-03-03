@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=QDE1Bn3SWHhurwaPIdb1KG2Q"></script>
+    <title>GPS转百度</title>
+</head>
+<body>
+    <div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    //GPS坐标
+    var x = 116.32715863448607;
+    var y = 39.990912172420714;
+    var ggPoint = new BMap.Point(x,y);
+
+    //地图初始化
+    var bm = new BMap.Map("allmap");
+    bm.centerAndZoom(ggPoint, 15);
+    bm.addControl(new BMap.NavigationControl());
+
+    //添加gps marker和label
+    var markergg = new BMap.Marker(ggPoint);
+    bm.addOverlay(markergg); //添加GPS marker
+    var labelgg = new BMap.Label("未转换的GPS坐标（错误）",{offset:new BMap.Size(20,-10)});
+    markergg.setLabel(labelgg); //添加GPS label
+
+    //坐标转换完之后的回调函数
+    translateCallback = function (data){
+      if(data.status === 0) {
+        var marker = new BMap.Marker(data.points[0]);
+        bm.addOverlay(marker);
+        var label = new BMap.Label("转换后的百度坐标（正确）",{offset:new BMap.Size(20,-10)});
+        marker.setLabel(label); //添加百度label
+        bm.setCenter(data.points[0]);
+      }
+    };
+
+    setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        pointArr.push(ggPoint);
+        convertor.translate(pointArr, 1, 5, translateCallback)
+    }, 1000);
+    
+    //批量转
+    var points = [new BMap.Point(116.3786889372559,39.90762965106183),
+                  new BMap.Point(116.38632786853032,39.90795884517671),
+                  new BMap.Point(116.39534009082035,39.907432133833574),
+                  new BMap.Point(116.40624058825688,39.90789300648029),
+                  new BMap.Point(116.41413701159672,39.90795884517671)
+    ];
+    //坐标转换完之后的回调函数
+    translateMCallback = function (data){
+      if(data.status === 0) {
+        for (var i = 0; i < data.points.length; i++) {
+            bm.addOverlay(new BMap.Marker(data.points[i]));
+            bm.setCenter(data.points[i]);
+        }
+      }
+    };
+    setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        convertor.translate(points, 1, 5, translateMCallback);
+        //var convertor = new BMap.Convertor().translate(points, 1, 5, translateMCallback);
+    }, 1000);
+    
+    //测试批量转换
+    var testJsonStr = [ //1000条数据
+     {"deviceId":"0001", "name": "0001", "longitude":116.174008, "latitude":40.059728, "time":"2015-12-18 16:19:51"},
+     {"deviceId":"0002", "name": "0002", "longitude":116.172708, "latitude":40.0603688, "time":"2015-12-18 15:44:36"},
+     {"deviceId":"0003", "name": "0003", "longitude":116.174535, "latitude":40.059727, "time":"2015-12-18 09:31:19"},
+     {"deviceId":"1000", "name": "1000", "longitude":116.37391967068, "latitude":39.981656, "time":"2015-12-18 16:59:34"} ]
+    
+    var mapcenterPt=new BMap.Point(116.403963,39.915112);
+    var posIndex=0;
+    var pointsArray=new Array();
+    var maxcnt=100;
+    
+    function TransGPS(){
+    	gpsPoints=getPoints(testJsonStr);
+    	var str="";
+    	for (var m=0;m<gpsPoints.length;m++){
+    		str+=gpsPoints[m].lng+","+gpsPoints[m].lat+";";
+    	}
+    	 var markergg = new BMap.Marker(gpsPoints[0]);
+    	 bm.addOverlay(markergg); //添加GPS marker
+    	 var labelgg = new BMap.Label("未转换的GPS坐标:"+str,{offset:new BMap.Size(20,-10)});
+    	 markergg.setLabel(labelgg); //添加GPS label
+    	    
+    	pointsArray=wareGpsPointsBeforeSend(gpsPoints);
+    	myTransMore(pointsArray[posIndex],0,"callback1");
+    }
+    
+    //返回百度点数据
+    function getPoints(testJsonStr){
+    	var points=[];
+    	for(var i=0;i<testJsonStr.length;i++){
+    		if(testJsonStr[i]["longitude"]!=null &&
+        			testJsonStr[i]["longitude"]!=0 &&
+        			testJsonStr[i]["latitude"]!=null &&
+        			testJsonStr[i]["latitude"]!=0){
+    			var pt=new BMap.Point(testJsonStr[i]["longitude"],testJsonStr[i]["latitude"]);
+    			points.push(pt);
+    		}else{
+    			points.push(mapCenterPt);
+    		}
+    	}
+    	return points;
+    }
+    
+    //返回百度点二维数据。针对大数据量，将数据以100位单位拆分为二维数组
+    function wareGpsPointsBeforeSend(gpsPoints){
+    	var pointsArray=new Array();
+    	var maxCnt=100;
+    	var times=Math.floor(gpsPoints.length/maxCnt);
+    	var k=0;
+    	for(var i=0;i<times;i++){
+    		pointsArray[i]=new Array();
+    		for(var j=0;j<maxCnt;j++,k++){
+    			pointsArray[i][j]=gpsPoints[k];
+    		}
+    	}
+    	if(k<gpsPoints.length){
+    		var j=0;
+    		var i=times;
+    		pointsArray[i]=new Array();
+    		while(k<gpsPoints.length){
+    			pointsArray[i][j]=gpsPoints[k];
+    			k++;
+    			j++
+    		}
+    	}
+    	return pointsArray;
+    }
+    
+    function myTransMore(points,type,callbackName){
+    	var xyUrl="http://api.map.baidu.com/geoconv/v1/?coords=";
+    	var coordsStr="";
+    	var maxCnt=100;
+    	var send=function(){
+    		var positionUrl=xyUrl+coordsStr+"&from1=&to=5&ak=ABfb51da799b942f910a4d1b9cacab24&callback="+callbackName;
+    		var script=document.createElement("script");
+    		script.src=positionUrl;
+    		document.getElementsByTagName("head")[0].appendChild(script);
+    		coordsStr="";
+    	};
+    	for(var index in points){
+    		if(index % maxCnt == 0 && index != 0){
+    			send();
+    		}
+    		coordsStr=coordsStr+points[index].lng+","+points[index].lat;
+    		if(index<points.length-1){
+    			coordsStr=coordsStr+";";
+    		}
+    		if(index == points.length-1){
+    			send();
+    		}
+    		
+    	}
+    }
+    
+    function callback1(data){
+    	if(data.status!=0){
+    		alert("地图坐标转换出错");
+    		return;
+    	}
+    	var maxCnt=100;
+    	var points=data.result;
+    	var TransResult=null;
+    	var str="";
+    	var bdPoint=[];
+    	for(var index in points){
+    		TransResult=points[index];
+    		var point=new BMap.Point(TransResult.x,TransResult.y);
+    		index1=eval(Math.floor(posIndex*maxCnt)+Math.floor(index));
+    		if(testJsonStr[index1]["longitude"]!=null &&
+    			testJsonStr[index1]["longitude"]!=0 &&
+    			testJsonStr[index1]["latitude"]!=null &&
+    			testJsonStr[index1]["latitude"]!=0
+    			){
+    			testJsonStr[index1]["longitude"]=point.lng;
+    			testJsonStr[index1]["latitude"]=point.lat;
+    			
+    			str+=point.lng+","+point.lat+";";
+    			bdPoint.push(point);
+    		}
+    	}
+    	posIndex++;
+    	if(posIndex<pointsArray.length){
+    		myTransMore(pointsArray[posIndex],0,"callback1");
+    	}
+    	if(posIndex==pointsArray.length){
+    		
+    		var aa;
+    		//loadMarkers(testJsonStr);
+    		//showMarker(testJsonStr);
+    	}
+    	
+    	var markergg = new BMap.Marker(bdPoint[0]);
+   	 	bm.addOverlay(markergg); //添加GPS marker
+   	 	var labelgg = new BMap.Label("转换后的GPS坐标:"+str,{offset:new BMap.Size(20,-10)});
+   	 	markergg.setLabel(labelgg); //添加GPS label
+   	 	bm.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    }
+    
+    setTimeout(function(){
+    	TransGPS();
+    }, 1000);
+</script>

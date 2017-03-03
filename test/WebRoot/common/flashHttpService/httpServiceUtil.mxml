@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   initialize="application1_initializeHandler(event)" 
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.http.HTTPService;
+			import mx.utils.ArrayUtil;
+			
+			public function sendHTTPService(p:Object){
+				
+				if(!p || !p.hasOwnProperty("url")){
+					Alert.show("参数无效或缺少url地址","来自flex");
+					return '{\"success\":false,\"p2\":22}';
+				}
+				
+				doRestCall(p.url,function(event:ResultEvent){
+					ExternalInterface.call("sendHttpServiceResultToJs",event.result.toString());
+				},function(event:FaultEvent){
+					Alert.show(""+event.type+"\n"+event.fault.faultDetail,"来自sendHTTPService请求");
+				},(p.hasOwnProperty("parms")?p.parms:null)
+					,(p.hasOwnProperty("restMethod")?p.restMethod:'GET')
+					,(p.hasOwnProperty("resultFormat")?p.resultFormat:HTTPService.RESULT_FORMAT_TEXT)
+					,(p.hasOwnProperty("contentType")?p.contentType:"application/json"));
+				//return "{\"p1\":11,\"p2\":22}";
+			}
+			
+			/**
+			 *  调用rest服务
+			 */
+			public function doRestCall(url:String, callback:Function, errback:Function=null, parms:Object=null, restMethod:String='GET', resultFormat:String=HTTPService.RESULT_FORMAT_TEXT,contentType:String="application/json"):void
+			{
+				var httpService:HTTPService = new HTTPService();
+				httpService.contentType = contentType;
+				httpService.url=encodeURI(url);
+				httpService.method=restMethod;
+				httpService.resultFormat = resultFormat;
+				httpService.addEventListener(ResultEvent.RESULT, callback);
+				if (errback != null)
+				{
+					httpService.addEventListener(FaultEvent.FAULT, errback);
+				}
+				httpService.send(parms);
+				httpService.disconnect();
+			}
+			
+			protected function application1_initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				Security.allowDomain("*"); 
+				Security.allowInsecureDomain("*");
+				ExternalInterface.addCallback("test",test);
+				ExternalInterface.addCallback("sendHTTPService",sendHTTPService);
+				//以下为测试
+				var url:String="http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_xzqy/MapServer/2/query?f=json&where=1=1%20&returnGeometry=false&returnIdsOnly=false&outFields=*";
+				doRestCall(url,function(event:ResultEvent){
+					Alert.show(event.result.toString(),"来自sendHTTPService请求");
+					ExternalInterface.call("sendHttpServiceResultToJs",event.result.toString());
+				},function(event:FaultEvent){
+					Alert.show(""+event.type+"\n"+event.fault.faultDetail,"来自sendHTTPService请求");
+				});
+			}
+			
+			private function test(p)
+			{
+				if(p is String)
+				{
+					Alert.show(p);
+				}else if(p is Object){
+					var str:String="";
+					for(var key:String in p)
+					{
+						str+=key+",";	
+					}
+					str=str.substr(0,str.length-1);
+					Alert.show(str);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+</s:Application>

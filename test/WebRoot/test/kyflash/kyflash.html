@@ -1,0 +1,67 @@
+
+<html>
+<head>
+<title>flash跨域测试成功</title>
+<script src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../js/common/json2.js"></script>
+<!-- <script src="ajax.swf"></script> -->
+<script src="ajaxf.js"></script>
+<!-- 下面详细说一下插件所提供的方法：
+http://127.0.0.1:8083/test/test/kyflash/kyflash.html
+  -->
+<!-- 　　　　$.ajaxf.install(swfpath)  -->
+<!-- 　　　　安装Flash到页面，可指定Flash的路径。  -->
+<!-- 　　　　$.ajaxf.ready(function(){})  -->
+<!-- 　　　　Flash加载完后执行的函数。  -->
+<!-- 　　　　$.ajaxf.isReady()  -->
+<!-- 　　　　返回Flash是否已经加载完成。返回值为Boolean  -->
+<!-- 　　　　$.ajaxf.ajax(p)  -->
+<!-- 　　　　原生的ajax调用支持，p为一个对象，包括：callback，回调函数；type，方法类型，支持json,text,xml,script；url，读取数据的地址；method，请求的方法，支持get,post；data，发送的数据；contentType，请求的contentType头；header，Object对象，附加的请求头。  -->
+<!-- 　　　　$.ajaxf.get(url, data, callback, type)  -->
+<!-- 　　　　通过get方式获取数据  -->
+<!-- 　　　　$.ajaxf.post(url, data, callback, type)  -->
+<!-- 　　　　通过post方式获取数据  -->
+<!-- 　　下面几个大家一看名称就知道函义就不多做解释  -->
+<!-- 　　　　$.ajaxf.getText(url, data, callback)  -->
+<!-- 　　　　$.ajaxf.getJSON(url, data, callback)  -->
+<!-- 　　　　$.ajaxf.getScript(url, data, callback)  -->
+<!-- 　　　　$.ajaxf.postJSON(url, data, callback)  -->
+<!-- 　　　　$.ajaxf.postText(url, data, callback)  -->
+<script type="text/javascript">
+		$(document).ready(function() {
+			$.ajaxf.isReady(function(){
+				alert("aa");
+			}); 
+			$.ajaxf.install('./flash4ajax.swf');
+			$("#fdemo_get").click(function() {
+				//alert($.ajaxf.ajax(p));
+				$.ajaxf.get("http://192.168.15.83:8083/dgsp/rest/system/getSystemMenuInfo/1080?d=1479953941870", 
+						{}, 
+						function(data){
+							if(typeof data=='object'){
+								$("#fdemo").val(JSON.stringify(data));
+							}else{
+								$("#fdemo").val(JSON.stringify(data));
+							}
+							
+				}, 
+				'json');
+
+// 				$.ajaxf.getText("http://192.168.15.83:6080/arcgis/rest/services/BaseMap/xm_sghy_xzqy/MapServer/2/query?f=json&where=1=1&returnGeometry=false&returnIdsOnly=false&outFields=*", '', function(data) {
+// 					if(typeof data=='object'){
+// 						$("#fdemo").val(JSON.stringify(data));
+// 					}else{
+// 						$("#fdemo").val(JSON.stringify(data));
+// 					}
+// 				});
+
+			});
+		});
+</script>
+</head>
+<body>
+	<textarea id='fdemo' style='width: 500px; height: 300px;'></textarea>
+	<br />
+	<input type="button" value="获取数据" id='fdemo_get' />
+</body>
+</html>

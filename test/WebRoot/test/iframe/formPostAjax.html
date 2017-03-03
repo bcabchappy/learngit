@@ -1,0 +1,50 @@
+ <html>
+<head>
+<title>ddd</title>
+</head>
+<body>
+<script type="text/javascript">
+//http://blog.sina.com.cn/s/blog_6940cab30101a1yj.html
+function check()
+{
+    var btn = document.getElementById("test_submit");
+    var frm = document.forms["test_form"];
+    var ifm = document.getElementById("test_iframe");
+    frm.action = "http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"²ÎÊý/67"+"?d="+Math.floor(Math.random()*10000);
+    frm.target = "test_iframe";
+    frm.submit();
+    btn.disabled = "disabled";
+//     ifm.onload = function(){
+//         btn.disabled = "";
+//         var str = ifm.contentWindow;
+//         alert(str.document.body.innerHTML);
+//         ifm.src = "about:blank"; 
+//         ifm.onload = null; 
+//     }
+    if(ifm.attachEvent){
+        ifm.attachEvent("onload", function(){ 
+            btn.disabled = ""; 
+            var str = ifm.contentWindow; 
+            alert(str.document.body.innerHTML); 
+            ifm.src = "about:blank"; 
+            ifm.detachEvent("onload", arguments.callee); 
+        });
+    }else{
+        ifm.onload = function(){
+            btn.disabled = ""; 
+            var str = ifm.contentWindow; 
+            alert(str.document.body.innerHTML); 
+            ifm.src = "about:blank"; 
+            ifm.onload = null; 
+        }
+    }
+    return false; 
+}
+</script>
+<form id="test_form" name="test_form" >
+    <input type="hidden" name="p1" value="xxx" />
+    <input type="submit" name="test_submit"  id="test_submit" />
+</form>
+<iframe id="test_iframe" name="test_iframe" width="1" height="1" style="display:none"></iframe>
+</body>
+</html>

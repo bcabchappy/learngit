@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>该页面的路径是：http://a.com/request.html</title>
+<script src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../js/common/json2.js"></script>
+</head>
+<body>
+    <p id="result">这里将会填上响应的结果</p>
+    <p id="result2">这里将会填上所有的响应结果</p>
+    <a id="sendBtn" href="javascript:void(0)">点击，发送跨域请求</a>
+    <iframe style="width:100px;height:5px;" id="serverIf"></iframe>
+    <script type="text/javascript">
+    //http://www.cnblogs.com/xueming/archive/2013/02/01/2888117.html
+        document.getElementById("sendBtn").onclick = function() {
+            var url = "http://127.0.0.1:8083/test/test/kyProxy/response.html";
+            var fn = "GetPerson";//这是定义在response.html的方法
+            var reqdata = '{"p1":11,"p1":22}';//这是请求的参数
+            var callback = "CallBack";//这是请求全过程完成后执行的回调函数，执行最后的动作
+            CrossRequest(url, fn, reqdata, callback);//发送请求
+        }
+        function CrossRequest(url, fn, reqdata, callback) {
+            var server = document.getElementById("serverIf");
+            server.src = url + "?fn=" + encodeURIComponent(fn) + "&data=" + encodeURIComponent(reqdata) + "&callback=" + encodeURIComponent(callback);//这里由request.html向response.html发送的请求其实就是通过iframe的src将参数与回调方法传给response.html
+        }
+        function CallBack(data) {//回调函数
+ //           var str = "success:" + data.success + "\npp1:" + data.pp1 + "\npp2:" + data.pp2 + "";
+ //           document.getElementById("result").innerHTML = str;
+            document.getElementById("result2").innerHTML = JSON.stringify(data);
+        }
+    </script>
+</body>
+</html>

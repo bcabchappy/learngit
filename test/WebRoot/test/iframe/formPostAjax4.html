@@ -1,0 +1,64 @@
+ <html>
+<head>
+<title>google有效</title>
+<script src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../js/common/json2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+// http://blog.csdn.net/qq0084/article/details/8448277
+	
+	var iframe;
+    function clickF(){
+    	 try{// IE6, IE7
+    	        iframe = document.createElement('<iframe name="postform">');
+    	    } catch(e) {
+    	        iframe = document.createElement('iframe');
+    	        iframe.name = "postform";
+    	    }
+    	    iframe.style.display = 'none';
+    	    document.body.appendChild(iframe);
+    	    if(iframe.readyState){
+    	        iframe.onreadystatechange = function(){
+    	            if (iframe.readyState && iframe.readyState=='complete'){
+    	                callbackFunction.apply(this);
+    	                iframeContent = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
+    	                textArea.value=iframeContent;
+    	            }
+    	        }.bind(this);
+    	    } else {
+    	        iframe.onload = callbackFunction.bind(this);
+    	    }
+    	    
+    	    var form = document.createElement('form');
+    	    form.action = "http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"参数/67"+"?d="+Math.floor(Math.random()*10000);
+    	    form.target = 'postform';     // important!!
+    	    form.method = 'post';
+    	    
+    	    var input = document.createElement('input');
+    	    input.name = "p1";
+    	    input.value = 11;
+    	    input.type = 'hidden';
+    	    form.appendChild(input);
+    	    var input1 = document.createElement('input');
+    	    input1.name = "p2";
+    	    input1.value = 22;
+    	    input1.type = 'hidden';
+    	    form.appendChild(input1);
+    	    
+    	    document.body.appendChild(form);
+    	    form.submit();
+    }
+    
+    function callbackFunction(){
+    	iframeContent = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
+    	 var abc=$(document.body).html();//JQ方式
+    	 var data=iframeContent.body.innerHTML;//JS方式
+    	textArea.value=$(data).text();
+    }
+    
+</script>
+<button onclick='clickF();'>提交</button>
+<textarea id='textArea' style="width:500px;height:300px;" rows="5" cols="10"></textarea>
+</body>
+</html>

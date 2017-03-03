@@ -1,0 +1,107 @@
+ <html>
+<head>
+<title>有效</title>
+<script src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../js/common/json2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+// http://blog.csdn.net/okkk/article/details/48472091
+	a.DoCallBack = function (fc){ 
+        try{
+            eval(fc);  
+        }catch (e){  
+            alert("跨域数据传递返回数据错误：" + e.message);  
+        }
+    }
+	var seriNo = 1;//跨域操作流水号  
+  
+    a.CPBack = function (frameID, data){
+        var backFrm = document.getElementById(frameID);
+        if (!backFrm)
+            return;
+        var t = getHiddenDivDirect.Target;
+        t.removeChild(backFrm);
+  
+        if (!backFrm.CPCallBackk)
+            return;
+  
+        backFrm.CPCallBackk(data);
+    }
+  
+	a.FormPost = function (mainCMD, subCmd, content, callBackName){  
+        //2层Frame跨域,无File上传  
+        //如果需要上传File,那么需要在HTML的From中完成  
+        var frm = getHiddenDiv(frm);  
+        if (frm == null)  
+        {  
+            alert("跨域等待数操作最大值");  
+            return;  
+        }  
+        frm.CPCallBackk = callBackName;  
+  
+  
+        var mainCC = {};  
+        mainCC.CallBack = frm.id;  
+        mainCC.CrossPageUrl = CPConfig.Local.CPFile;  
+        mainCC.Command = mainCMD;  
+        var mainCCStr = JSON.stringify(mainCC);  
+  
+  
+        frm.contentWindow.document.open();  
+        var wDoc = frm.contentWindow.document;  
+        wDoc.write("<html><head><title></title></head>");  
+        wDoc.write("<body><form id='autoForm' enctype='multipart/form-data' action='");  
+        wDoc.write(CPConfig.Server.Using);  
+        wDoc.write("' target='hiddenFrm' method='post'><textarea name=\"c\">");  
+        wDoc.write(content);  
+        wDoc.write("</textarea><textarea name=\"a\">");  
+        wDoc.write(mainCCStr);  
+        wDoc.write("</textarea><textarea name=\"b\">");  
+        wDoc.write(subCmd);  
+        wDoc.write("</textarea></form><iframe name=\"hiddenFrm\"/></body></html>");  
+        wDoc.close();  
+        var formT = wDoc.getElementById("autoForm");  
+        formT.submit();  
+  
+  
+    }
+  
+  
+    function getHiddenDiv(){  
+        var noSeriIO = seriNo++;  
+        var frm = document.createElement("iframe");  
+        frm.id = "ghChainHiddenPost" + noSeriIO;  
+  
+  
+        var t = document.createElement("div");  
+        t.id = "gfChainHiddenContainer";  
+        t.style.cssText = "display:none;position:absolute;width:0px;height:0px;";  
+        if (document.body == null)  
+            alert("不能在Head的JS中Post数据，请移动到HTML末尾处");  
+        else  
+            document.body.appendChild(t);  
+        getHiddenDivDirect.Target = t;  
+        getHiddenDiv = getHiddenDivDirect;  
+  
+  
+        t.appendChild(iframe);  
+        return iframe;  
+    }
+    function getHiddenDivDirect() {  
+        var t = getHiddenDivDirect.Target;  
+        if (t.childNodes.length > 20) {//======================最大跨域提交等待数；========================  
+            return null;  
+        }  
+  
+  
+        var noSeriIO = seriNo++;  
+        var frm = document.createElement("iframe");  
+        frm.id = "ghChainHiddenPost" + noSeriIO;  
+        t.appendChild(iframe);  
+    }
+</script>
+<button onclick='clickF();'>提交</button>
+<textarea id='textArea' style="width:500px;height:300px;" rows="5" cols="10"></textarea>
+</body>
+</html>

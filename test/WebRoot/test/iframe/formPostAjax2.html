@@ -1,0 +1,80 @@
+ <html>
+<head>
+<title>google有效</title>
+<script src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../../js/common/json2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+// http://www.cnblogs.com/hanbingljw/p/3958033.html
+function iframeform(url)        //创建form和iframe
+{
+    var object = this;
+    object.time = new Date().getTime();
+    object.form = $('<form action="'+url+'" target="iframe'+object.time+'" method="post" style="display:none;" id="form'+object.time+'" name="form'+object.time+'"></form>');
+    //name 属性必须
+    object.addParameter = function(parameter,value)
+    {
+        $("<input type='hidden' />")
+         .attr("name", parameter)
+         .attr("value", value)
+         .appendTo(object.form);
+    }
+
+    object.send = function()
+    {
+        var iframe = $('<iframe data-time="'+object.time+'" style="display:none;" id="iframe'+object.time+'" name="iframe'+object.time+'"></iframe>'); //name属性是必须
+        $( "body" ).append(iframe); 
+        $( "body" ).append(object.form);
+        
+        $("iframe").load(function(){
+            var doc = $(this).get(0).contentWindow||$(this).get(0).contentWindow;  //用于获取在iframe中响应的后台服务器数据
+ //              alert(doc.document.body.innerHTML);  //弹出显示iframe里面的内容 
+ 				var data=doc.document.body.innerHTML;
+//  				var reg = /<pre.+?>(.+)<\/pre>/g;  
+//  				var result = data.match(data);  
+//  				data = RegExp.$1;
+               textArea.value=$(data).text();
+            $(this).attr("src","about:blank");
+            $(this).get(0).onload = null;    
+     });
+        
+        object.form.submit();
+        iframe.load(function(){  
+                     $('#form'+$(this).data('time')).remove(); 
+                     $(this).remove(); 
+                      });
+    }
+}
+/******************************/
+/*
+*用法
+*/
+
+
+  
+	function clickF(){
+// 		  var PostData ={             //需要发送的数据
+//                   vid:$(this).data(vid),
+//                   msg:11,
+//                   time:timeformatted,
+//                   fontSize:TMdata.fontSize,
+//                   fontMode:TMdata.fontMode,
+//                   fontColor:TMdata.fontColor,
+//                   timestamp:timestamp()
+//               };  	
+		 var dummy = new iframeform("http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"参数/67"+"?d="+Math.floor(Math.random()*10000));
+         dummy.addParameter('p1',11);
+         dummy.addParameter('p2',22);
+//          dummy.addParameter('time',PostData.time);
+//          dummy.addParameter('fontSize',PostData.fontSize);
+//          dummy.addParameter('fontMode',PostData.fontMode);
+//          dummy.addParameter('fontColor',PostData.fontColor);
+//         dummy.addParameter('timestamp',PostData.timestamp);
+         dummy.send();
+	}
+</script>
+<button onclick='clickF();'>提交</button>
+<textarea id='textArea' style="width:500px;height:300px;" rows="5" cols="10"></textarea>
+</body>
+</html>

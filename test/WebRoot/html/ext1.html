@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>window.html</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<!--ExtJs框架开始-->
+<script type="text/javascript" src="../js/ext/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../js/ext/ext-all.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../js/ext/resources/css/ext-all.css" />
+<!--ExtJs框架结束-->
+<script type="text/javascript">
+	Ext.onReady(function() {
+		//		Ext.MessageBox.alert("hello","world");
+		var accordion = new Ext.Panel({
+			title : "功能分组",
+			layout : "accordion",
+			layoutConfig : {
+				animate : true
+			},
+			width : 250,
+			minWidth : 100,
+			region : "west",
+			split : false,
+			collapsible : true,
+			items : [ {
+				title : "嵌套面板一",
+				html : "嵌套面板一",
+				iconCls : "save"
+			}, {
+				title : "嵌套面板二",
+				html : "嵌套面板二",
+				iconCls : "search"
+			}, {
+				title : "嵌套面板三",
+				html : "嵌套面板三",
+				iconCls : "back"
+			} ]
+		});
+
+				var titlepanel = Ext.create('Ext.form.Panel', {
+					title : "hello ext panel!",
+					frame : true,
+					region : "east",
+					items : [ {
+						layout : 'column',
+						frame : true,
+						items : [ {
+							xtype : 'textfield',
+							fieldLabel : '姓名',
+							name : 'name'
+						}, {
+							xtype : 'textfield',
+							fieldLabel : '年龄',
+							name : 'age'
+						} ]
+					} ]
+				});
+
+		// 		var vp=new Ext.Viewport({
+		// 			title : "Viewport",
+		// 			layout : "border",
+		// 			defaults : {
+		// 				bodyStyle : "background-color: #FFFFFF;",
+		// 				frame : true
+		// 			},
+		// 			items : [ {regin:"center"},titlepanel, accordion ]
+		// 		});
+		// 		var pform = Ext.create('Ext.form.FormPanel', {
+		// 			region : "north",
+		// 			tbar : [
+		// 					{
+		// 						xtype : "button",
+		// 						text : "确定",
+		// 						listeners : {
+		// 							"click" : function() {
+		// 								Ext.MessageBox.alert("提示", "helllo button");
+		// 							}
+		// 						}
+		// 					},
+		// 					{
+		// 						xtype : "button",
+		// 						text : "取消",
+		// 						listeners : {
+		// 							"click" : function() {
+		// 								Ext.MessageBox.alert("提示", "取消");
+		// 							}
+		// 						}
+		// 					},
+		// 					{
+		// 						xtype : "combo",
+		// 						id : "combo1",
+		// 						lazyRender : true,
+		// 						mode : 'local',
+		// 						emptyText : "请选择",
+		// 						store : new Ext.data.ArrayStore({
+		// 							id : 0,
+		// 							fields : [ 'value', 'label' ],
+		// 							data : [ [ 1, 'item1' ], [ 2, 'item2' ] ]
+		// 						}),
+		// 						valueField : 'value',
+		// 						displayField : 'label',
+
+		// 						listeners : {
+		// 							"select" : function(combo, record, index) {
+		// 								Ext.MessageBox.alert("提示", "helllo combo:"
+		// 										+ Ext.getCmp("combo1"));
+		// 							}
+		// 						}
+
+		// 					} ],
+		// 			items : [ {
+		// 				xtype : 'textfield',
+		// 				fieldLabel : '图层名称',
+		// 				name : 'layerName'
+		// 			} ],
+		// 			listeners : {
+		// 				"click" : function() {
+		// 					Ext.MessageBox.alert('提示', '单击panel!');
+		// 				}
+		// 			}
+		// 		});
+		
+		//用户名input
+	             var txtusername = new Ext.form.TextField({
+	                  width: 140,
+	                  allowBlank: false,
+	                  maxLength: 20,
+	                  name: 'username',
+	                  fieldLabel: '用户名称',
+	                  blankText: '请输入用户名',
+	                  maxLengthText: '用户名不能超过20个字符'
+	              });
+	              //密码input
+	              var txtpassword = new Ext.form.TextField({
+	                  width: 140,
+	                  allowBlank: false,
+	                  maxLength: 20,
+	                  inputType: 'password',
+	                 name: 'password',
+	                  fieldLabel: '密码',
+	                  blankText: '请输入密码',
+	                  maxLengthText: '密码不能超过20个字符'
+	              });
+
+		//表单
+		var form = new Ext.form.FormPanel({
+			frame : true,
+			id:'formid',
+			title : '表单标题',
+//			anchor : '40%',
+//			height:400,
+			style : 'margin:10px',
+			region : "north",
+			items : [ txtusername, txtpassword ]
+		});
+
+		var view = new Ext.Viewport({
+			layout : "border",
+			 listeners: { 'resize': function( viewport, adjWidth, adjHeight, rawWidth, rawHeight ) { 
+				  Ext.getCmp("formid").setHeight((document.body.clientHeight - 300) * 0.67);  } } , 
+			items : [ form, {
+				region : "south",
+				height : 100,
+				title : "south底部面板"
+			}, {
+				region : "center",
+				title : "center中央面板"
+			}, {
+				region : "west",
+				width : 200,
+				title : "west左边面板"
+			}, titlepanel]
+		});
+		
+		
+	});
+
+	// 		var vp=new Ext.Viewport({
+	// 			title : "Viewport",
+	// 			layout : "border",
+	// 			defaults : {
+	// 				bodyStyle : "background-color: #FFFFFF;",
+	// 				frame : true
+	// 			},
+	// 			items : [ titlepanel, pform ]
+	// 		});
+	//		Ext.MessageBox.alert("hello","world");
+</script>
+</head>
+
+<body>
+	<!--
+  说明：
+  (1)var btnsubmit = new Ext.Button():创建一个新的Button按钮对象。
+  (2)handler: btnsubmitclick：当用户点击的时候[即js中的onclick事件]执行方法btnsubmitclick。
+  (3)listeners: {'mouseover': btnresetmouseover,'click': btnresetclick}：当用户点击的时候[即js中的onclick事件]执行方法btnresetclick，
+      鼠标悬停时执行方法btnresetmouseover。
+ (4)handler与listeners的区别：
+     handler:执行的是首发事件，click是button这个组件的首发事件。这就是handler的运行方式：被某个组件的首要event所触发。
+             handler是一个特殊的listener。
+     listener：是一个事件名 + 处理函数的组合，事件监听，如上例代码所示，我们监听了两个事件"click"，与"mouseover"事件，并且会顺序执行。
+ -->
+</body>
+<br>
+</body>
+
+</html>

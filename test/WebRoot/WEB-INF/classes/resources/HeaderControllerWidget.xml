@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<configuration>
+	<fbl>1600:900,1367:768,1366:768</fbl>
+	<lsk>http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_csgx/MapServer/0</lsk>
+	<actions>
+		<action name="城市更新专项行动" code="csgxzxxd">
+			<actionInfo>完成拆除重建类城市更新项目用地供应75公顷。</actionInfo>
+			<layer name='城市更新拆除重建类图斑' talbeName="城市更新拆除重建1110" layerId="cccjl" code="csgxzxxd_1"  subInfo="aa" areaField="面积"  subClass="" tbbhField="地块编号" actionName="城市更新专项行动" year="2016" spFields="已完成,未完成">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_csgx/MapServer/0</layer>
+    		<layer name='旧工业区整合整治项目图斑' talbeName="城市更新综合整治1110 " layerId="zhzzl" code="csgxzxxd_2"  subInfo="aa" areaField="面积" subClass="" tbbhField="地块编号"  actionName="城市更新专项行动" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/6</layer>
+    		<layer name='2016城市更新工作量' talbeName="2016年城市更新_zxt" layerId="zhzzl" code="csgxzxxd_3" isSDZX="false"  subInfo="aa" areaField="AREA" subClass="" tbbhField="gzl"  actionName="城市更新专项行动" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxtt/MapServer/7</layer>
+			<layer name='2016年城市更新工作量' talbeName="2016年城市更新_zxt " layerId="zhzzl" code="csgxzxxd_4" isSDZX="false"  subClass="" tbbhField="gzl"  actionName="城市更新专项行动" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxt/MapServer/1</layer>
+		</action>
+		
+		<action name="土地整备专项行动" code="tdzbzxxd">
+			<actionInfo>推进开展土地整备利益统筹试点面积不少于10.77平方公里，加快推进公共基础设施、重大民生工程的房屋征收工作。</actionInfo>
+			<layer name='土地整备利益统筹图斑'  talbeName="土地整备利益统筹161109" actionName="土地整备专项行动" code="tdzbzxxd_1" areaField="面积"  subInfo="aa"  subClass=""  tbbhField="地块编号" year="2016"  spFields="测绘招标,测绘完成,方案研究,规划招标,完成规划" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/sdzx_tdzb/MapServer/0</layer>
+    		<layer name='重点土地整备与房屋征收' talbeName="土地整备房屋征收1110" actionName="土地整备专项行动" code="tdzbzxxd_2"  subInfo="aa" areaField="面积"  subClass=""  tbbhField="地块编号" year="2016" spFields="JZ_提交现,JZ_提交方,测绘完,评估完,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/0</layer>
+			<layer name='2016年土地整备工作量' talbeName="" actionName="土地整备专项行动" code=""  subClass="" isSDZX="false"  tbbhField="gzl" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxt/MapServer/0</layer>
+		</action>
+		 
+		<action name="地籍调查和土地总登记" code="djdchtdzdjzxxd">
+			<actionInfo>2020底前，基本实现地籍调查全覆盖，基本掌握我区土地资产家底，基本实现土地登记造册全覆盖。</actionInfo> 
+			<layer name='地籍调查及土地总登记图斑' talbeName="地籍调查及土地总登记1109" actionName="地籍调查和土地总登记" code="djdchtdzdjzxxd_1" areaField="面积"  subInfo="aa"  subClass="" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_djdc_tb/MapServer/0</layer>
+		</action>
+		
+		<action name="重大产业项目用地保障专项行动" code="zdcyxmydbzzxxd">
+			<actionInfo>推动释放总面积约238公顷的5公顷以上大型产业地块。</actionInfo>
+			<layer name='产业用地一类2016年图斑'  talbeName="SDE.产业用地一类1110" actionName="重大产业项目用地保障专项行动" code="zdcyxmydbzzxxd_2016" areaField="面积"  subInfo="aa"  subClass="重大产业项目用地保障专项行动" tbbhField="地块编号" year="2016" spFields="测绘,评估 ,方案编制,协议签订,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/sdzx_tb/MapServer/1</layer>
+    		<layer name='产业用地二类2017年图斑' talbeName="SDE.重大产业项目用地保障专项 " actionName="重大产业项目用地保障专项行动" code="zdcyxmydbzzxxd_2017" areaField="SHAPE.AREA"  subInfo="aa"  subClass="重大产业项目用地保障专项行动" tbbhField="OBJECTID" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/1</layer>
+			<layer name='2016年重大产业项目用地工作量' talbeName="SDE.重大产业项目用地保障专项 " isSDZX="false" actionName="重大产业项目用地保障专项行动" code="zdcyxmydbzzxxd_3"  subClass="重大产业项目用地保障专项行动" tbbhField="gzl" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/1</layer>
+		</action>
+		 
+		<action name="建设用地清退专项行动" code="jsydqtzxxd"> 
+			<actionInfo>加快推进全区建设用地清退工作，2020年底完成清退规模不低于8.0平方公里。</actionInfo>
+			<layer name='建设用地清退2016年图斑'  talbeName="建设用地清退1110" actionName="建设用地清退专项行动"  code="jsydqtzxxd_2016" areaField="面积"  subInfo="aa"  subClass="建设用地清退专项行动" tbbhField="地块编号" year="2016" spFields="完成招投标,签订合同,队伍进场,复绿完成,完成验收" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/sdzx_tb/MapServer/3</layer>
+    		<layer name='建设用地清退2017年图斑' talbeName="SDE.建设用地清退 " actionName="建设用地清退专项行动"  code="jsydqtzxxd_2017" areaField="面积"  subInfo="aa"  subClass="建设用地清退专项行动" tbbhField="编号" year="2017" spFields="JZ_完成招,JZ_签订合,JZ_队伍进,JZ_复绿完,JZ_完成验" >http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/5</layer>
+			<layer name='2016年建设用地清退工作量' talbeName="" isSDZX="false" actionName="建设用地清退专项行动"  code=""  subClass="建设用地清退专项行动" tbbhField="gzl" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxt/MapServer/2</layer>
+		</action>
+		
+		<action name="违法建筑断根专项行动" code="wfjzdgzxxd">
+			<actionInfo>通过各种综合手段，推动龙岗区7.92平方公里未完善征转手续、未建设空地的盘活利用，解决未完善征转手续未建设用地历史遗留问题。</actionInfo>
+			<layer name='违法建筑断根2016年图斑'  talbeName="违建断根20161110" actionName="违法建筑断根专项行动" code="wfjzdgzxxd_2016" areaField="面积"  subInfo="aa"  subClass="" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编制,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/sdzx_tb/MapServer/6</layer>
+    		<layer name='违法建筑断根2017-2018年图斑' talbeName="SDE.违法建筑断根" actionName="违法建筑断根专项行动" code="wfjzdgzxxd_2017" areaField="面积"  subInfo="aa"  subClass="违法建筑断根专项行动" tbbhField="地块编号" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+    		<layer name='违法建筑断根2019-2020年图斑' talbeName="SDE.违法建筑断根" actionName="违法建筑断根专项行动" code="wfjzdgzxxd_2019" areaField="面积"  subInfo="aa"  subClass="违法建筑断根专项行动" tbbhField="地块编号" year="2019" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+			<layer name='2016年违建断根工作量' talbeName="" isSDZX="false" actionName="违法建筑断根专项行动" code="wfjzdgzxxd_4"  subClass="违法建筑断根专项行动" tbbhField="gzl" year="2019" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxt/MapServer/10</layer>
+		</action>
+		
+		<action name="政府储备土地清理专项行动" code="zfcbtdqlzxxd">
+			<actionInfo>强力推动完成全区目前仍被违法占用和存在权属争议的2.29平方公里政府储备土地清理工作。</actionInfo>
+			<layer name='储备土地专项清理2016年图斑'  talbeName="储备土地专项清理161108" actionName="政府储备土地清理专项行动" code="zfcbtdqlzxxd_2016" areaField="面积"  subInfo="aa"  subClass="政府储备土地清理专项行动" tbbhField="地块编号" year="2016" spFields="权属核查,类型判断,方案制定,执法清理,验收入库" >http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_cbtd/MapServer/0</layer>
+<!--     		<layer name='整备清理2017-2020年图斑' talbeName="SDE.政府储备土地清理" actionName="政府储备土地清理专项行动" code="zfcbtdqlzxxd_2017" areaField="面积"  subInfo="aa"  subClass="政府储备土地清理专项行动" tbbhField="编号" year="2017" spFields="JZ_权属核,JZ_类型判,JZ_处理方,JZ_执法清,JZ_验收入">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/2</layer> -->
+			<layer name='2016年政府储备用地工作量' talbeName="" isSDZX="false" actionName="政府储备土地清理专项行动" code="zfcbtdqlzxxd_3"  subClass="政府储备土地清理专项行动" tbbhField="gzl" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zxt/MapServer/3</layer>
+    		<layer name='2018年政府储备用地工作量' talbeName="" isSDZX="false" actionName="政府储备土地清理专项行动" code="zfcbtdqlzxxd_4"  subClass="政府储备土地清理专项行动" tbbhField="gzl" year="2017" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_zfcbyd/MapServer/0</layer>
+		</action>
+		
+		<action name="违法建筑疏导专项行动" code="wfjzsdzxxd"> 
+			<actionInfo>全面控停、依法拆除新增违建，规范各类建设行为，推动历史遗留违建处理，确保新增违建“零增长”、存量违建“负增长”。</actionInfo>
+			<layer name='城市更新消化'  talbeName="sde.违法建筑断根" actionName="违法建筑疏导专项行动" code="wfjzsdzxxd_1" areaField="面积"  subInfo="aa"  subClass="违法建筑疏导专项行动" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+    		<layer name='已消化存量图斑' talbeName="sde.违法建筑断根2019_2020" actionName="违法建筑疏导专项行动" code="wfjzsdzxxd_2" areaField="Shape_Area"  subInfo="aa"  subClass="违法建筑疏导专项行动" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_wjsd/MapServer/2</layer>
+    		<layer name='未消化存量图斑'  talbeName="" actionName="违法建筑疏导专项行动" code="wfjzsdzxxd_3" areaField="SHAPE_AREA" subInfo="aa"  subClass="违法建筑疏导专项行动" tbbhField="OBJECTID" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx_new/sdzx_wjsd/MapServer/0</layer>
+    		<layer name='公配确权消化' talbeName="" actionName="违法建筑疏导专项行动" code="wfjzsdzxxd_4" areaField=""  subInfo="aa"  subClass="违法建筑疏导专项行动" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+		</action>
+		
+		<action name="违法建筑全面管治专项行动" code="wfjzqmgzzxxd">
+			<actionInfo>完成全区存量违法建筑安全隐患排查、重大或危急安全隐患整治、违法乱搭建清理拆除等工作。</actionInfo>
+			<layer name='违法建筑全面管治' areaField="面积" subInfo="aa"  talbeName="" actionName="违法建筑非法销售监管执法专项" code="wfjzqmgzzxxd_1"   subClass="" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+		</action>
+		
+		<action name="违法建筑非法销售监管执法专项行动" code="wfjzffxsjgzfzxxd">
+			<actionInfo>摸清全区存量违法建筑销售情况，遏制新增违建销售行为，从销售环节斩断违法建筑的违法利益来源。</actionInfo>
+			<layer name='违法建筑非法销售监管执法' talbeName="" actionName="违法建筑非法销售监管执法专项" code="wfjzffxsjgzfzxxd_1" areaField="面积"  subInfo="aa"  subClass="" tbbhField="地块编号" year="2016" spFields="测绘,评估,方案编写,补偿协议,土地入库">http://10.17.254.62:6080/arcgis/rest/services/sdzx/lgdghy_sdzx/MapServer/3</layer>
+		</action>
+	</actions>
+	
+</configuration>
+

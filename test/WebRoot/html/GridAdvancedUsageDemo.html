@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title></title>
+  <!-- 3Lib, ExtJS -->
+<!--   <script src="3Lib/Browser/Ext/ext-all-debug.js" type="text/javascript"></script> -->
+<!--   <script src="3Lib/Browser/Ext/classic/locale/locale-zh_CN-debug.js" type="text/javascript"></script> -->
+<!--   <script src="3Lib/Browser/Ext/classic/theme-classic/theme-classic-debug.js" type="text/javascript"></script> -->
+<!--   <link href="3Lib/Browser/Ext/classic/theme-classic/resources/theme-classic-all-debug.css" type="text/css" rel="stylesheet" /> -->
+  	  <!--ExtJs框架开始-->
+      <script type="text/javascript" src="../js/ext/adapter/ext/ext-base.js"></script>
+      <script type="text/javascript" src="../js/ext/ext-all-debug.js"></script>
+       <script type="text/javascript" src="../js/ext/ext-all-debug.js"></script>
+     <link rel="stylesheet" type="text/css" href="../js/ext/resources/css/ext-all.css" />
+      <!--ExtJs框架结束-->
+  <!-- Demo Script -->
+  <script type="text/javascript">
+    Ext.onReady(function () {
+      //================================================================
+      // 示例，视图。
+      Ext.define("Demo.demo1.view.Demo1", {
+        extend: "Ext.panel.Panel", alias: "widget.demo1",
+        viewModel: { type: "demo1" }, controller: "demo1",
+        layout: "fit", title: "Grid Advanced Demo - Simple Query Builder",
+        items: [{
+          xtype: "grid",
+          bind: { store: "{FieldStore}" },
+          selModel: { selType: 'rowmodel', mode: 'SINGLE' },
+          rowLine: true, columnLines: true,
+          reserveScrollbar: true, scrollable: { x: "scroll", y: "scroll" },
+          columns: [{
+            xtype: "widgetcolumn", dataIndex: "FName",
+            header: "<span style='font-weight:bold'>#</span>", width: 40,
+            widget: { xtype: "aprownumcolumnwidget" },
+            onWidgetAttach: function (e1, e2, e3) { e2.createWidgetContent(); },
+          }, {
+            xtype: "widgetcolumn", dataIndex: "FTitle",
+            header: "<span style='font-weight:bold'>Search On</span>", width: 120,
+            widget: { xtype: "aptextcolumnwidget" },
+            onWidgetAttach: function (e1, e2, e3) { e2.createWidgetContent(); },
+          }, {
+            xtype: "widgetcolumn", dataIndex: "FOp",
+            header: "<span style='font-weight:bold'>Compair Operator</span>", width: 100,
+            widget: { xtype: "apfopcolumnwidget" },
+            onWidgetAttach: function (e1, e2, e3) { e2.createWidgetContent(); },
+          }, {
+            xtype: "widgetcolumn", dataIndex: "FVal",
+            header: "<span style='font-weight:bold'>Search Value</span>", width: 200,
+            widget: { xtype: "apfvalcolumnwidget" },
+            onWidgetAttach: function (e1, e2, e3) { e2.createWidgetContent(); },
+          }, {
+            xtype: "widgetcolumn", dataIndex: "FNotes",
+            header: "<span style='font-weight:bold'>Notes</span>", width: 300,
+            widget: { xtype: "aptextcolumnwidget" },
+            onWidgetAttach: function (e1, e2, e3) { e2.createWidgetContent(); },
+          }, ],
+        }],
+        dockedItems: [{
+          dock: "bottom", baseCls: "x-toolbar",
+          layout: { type: "hbox", align: "stretch", pack: "end" },
+          defaults: { margin: 1 },
+          items: [{
+            xtype: "button", text: "Show Current Record Info", handler: "ShowCurRecInfo_Click",
+          }, ],
+        }],
+      });
+      Ext.define("Demo.appub.APColumnWidget", {
+        extend: "Ext.container.Container",
+        layout: "fit", height: 20,
+        getValue: function () { return this.value; },
+        setValue: function (v) { this.value = v; },
+        constructor: function (vCfg) {
+          this.callParent(arguments);
+          this.defaultBindProperty = "value";
+        },
+        createWidgetContent: function () {
+          var me = this; me.removeAll();
+          var vRec = me.getWidgetRecord();
+          if (vRec) {
+            var vContent = me.createWidgetContentFunc(vRec);
+            if (vContent) { vContent.on("focus", function () { me.selectWidgetRow(); }); };
+            if (vContent) { me.add(vContent); }
+          }
+        },
+        // 继承类需要重写，并返回WidgetContent控件。
+        createWidgetContentFunc: function (vRec) { return null; },
+        selectWidgetRow: function () {
+          var me = this;
+          var vRec = me.getWidgetRecord();
+          var grdField = me.up("grid");
+          grdField.setSelection(vRec);
+        },
+        updateWidgetRecord: function () {
+          var vValue = this.getValue();
+          var vRec = this.getWidgetRecord();
+          vRec.set(this.getWidgetColumn().dataIndex, vValue);
+          vRec.commit();
+        },
+      });
+      Ext.define("Demo.appub.APRowNumColumnWidget", {
+        extend: "Demo.appub.APColumnWidget", alias: "widget.aprownumcolumnwidget",
+        createWidgetContentFunc: function (vRec) {
+          var iRowNum = vRec.store.indexOf(vRec) + 1;
+          var vRlt = Ext.create({
+            xtype: "button", baseCls: "x-plain",
+            textAlign: "right", text: "<span style='color:green;font-weight:bold'>" + iRowNum + "</span>",
+          });
+          return vRlt;
+        },
+      });
+      Ext.define("Demo.appub.APTextColumnWidget", {
+        extend: "Demo.appub.APColumnWidget", alias: "widget.aptextcolumnwidget",
+        createWidgetContentFunc: function (vRec) {
+          var me = this;
+          var vRlt = Ext.create({
+            xtype: "button", baseCls: "x-plain",
+            textAlign: "left", text: me.getValue(),
+          });
+          return vRlt;
+        },
+      });
+      Ext.define("Demo.appub.APFOpColumnWidget", {
+        extend: "Demo.appub.APColumnWidget", alias: "widget.apfopcolumnwidget",
+        createWidgetContentFunc: function (vRec) {
+          var me = this;
+          var vDataList = [
+            { OpId: "=", OpDesc: "Equal", }, { OpId: "<>", OpDesc: "Not Equal", },
+            { OpId: ">", OpDesc: "Greater Than", }, { OpId: ">=", OpDesc: "Greater Than Or Equal", },
+            { OpId: "<", OpDesc: "Less Than", }, { OpId: "<=", OpDesc: "Less Than Or Equal", },
+          ];
+          if (vRec.get("FType") === "String") { vDataList.push({ OpId: "LIKE", OpDesc: "Contains", }); }
+          var vRlt = Ext.create({
+            xtype: "combo", editable: false, matchFieldWidth: false,
+            queryMode: "local", value: me.getValue(),
+            displayField: "OpDesc", valueField: "OpId",
+            fieldStyle: { "color": "blue", },
+            store: Ext.create("Ext.data.Store", {
+              fields: ["OpId", "OpDesc"],
+              proxy: { type: "memory", reader: { type: "json", rootProperty: "DataList" } },
+              data: { DataList: vDataList, },
+            }),
+          });
+          vRlt.on("change", function () { me.setValue(arguments[0].getValue()); me.updateWidgetRecord(); });
+          return vRlt;
+        },
+      });
+      Ext.define("Demo.appub.APFValColumnWidget", {
+        extend: "Demo.appub.APColumnWidget", alias: "widget.apfvalcolumnwidget",
+        createWidgetContentFunc: function (vRec) {
+          var me = this;
+          var sFType = vRec.get("FType");
+          var vRlt = null;
+          if (me.fSEq(sFType, "Double")) {
+            vRlt = Ext.create({ xtype: "numberfield", });
+          }
+          else if (me.fSEq(sFType, "DateTime")) {
+            vRlt = Ext.create({ xtype: "datefield", });
+          }
+          else if (me.fSEq(vRec.get("FName"), "Gender")) {
+            vRlt = Ext.create({
+              xtype: "combo", queryMode: "local", editable: false,
+              displayField: "Text", valueField: "Text",
+              store: Ext.create("Ext.data.Store", {
+                fields: ["Text"],
+                proxy: { type: "memory", reader: { type: "json", rootProperty: "DataList" } },
+                data: { DataList: [{ Text: "Male" }, { Text: "Female" }], },
+              }),
+            });
+          }
+          else {
+            vRlt = Ext.create({ xtype: "textfield", });
+          }
+          vRlt.setFieldStyle({ "color": "blue" }); vRlt.setValue(me.value);
+          vRlt.on("change", function () { me.setValue(arguments[0].getValue()); me.updateWidgetRecord(); });
+          return vRlt;
+        },
+        fSEq: function (v1, v2) {
+          v1 = (v1 || "").toString().trim().toUpperCase();
+          v2 = (v2 || "").toString().trim().toUpperCase();
+          var bRlt = v1 === v2;
+          return bRlt;
+        },
+      });
+      //================================================================
+      // 示例，视图模型。
+      Ext.define("Demo.demo1.viewmodel.Demo1", {
+        extend: "Ext.app.ViewModel", alias: "viewmodel.demo1",
+        stores: {
+          FieldStore: {
+            fields: ["FName", "FTitle", "FType", "FNotes", "FOp", "FVal"],
+            proxy: { type: "memory", reader: { type: "json", rootProperty: "DataList" } },
+            data: {
+              DataList: [
+                { FName: "Name", FTitle: "Name", FType: "String", FNotes: "", FOp: "=", FVal: "LiaoSC" },
+                { FName: "Gender", FTitle: "Gender", FType: "String", FNotes: "", FOp: "=", FVal: "Male" },
+                { FName: "BirthDate", FTitle: "Birth Date", FType: "DateTime", FNotes: "", FOp: "=", FVal: Ext.Date.parse("1965/04/18", "Y/m/s", false) },
+                { FName: "Score", FTitle: "Score", FType: "Double", FNotes: "", FOp: "=", FVal: 80.5 },
+                { FName: "Notes", FTitle: "Notes", FType: "String", FNotes: "", FOp: "=", FVal: "Love Coding" },
+              ],
+            },
+          },
+        },
+      });
+      //================================================================
+      // 示例，视图控制器。
+      Ext.define("Demo.demo1.viewcontroller.Demo1", {
+        extend: "Ext.app.ViewController", alias: "controller.demo1",
+        ShowCurRecInfo_Click: function () {
+          var grdField = this.getView().down("grid");
+          var vRecs = grdField.getSelectionModel().selected;
+          var vRec = vRecs.length > 0 ? vRecs.items[0] : null;
+          if (vRec) {
+            var sMsg = "{0} {1} {2}";
+            sMsg = sMsg.replace("{0}", vRec.data.FName);
+            sMsg = sMsg.replace("{1}", vRec.data.FOp);
+            sMsg = sMsg.replace("{2}", vRec.data.FVal);
+            window.alert(sMsg);
+          }
+        },
+      });
+      //================================================================
+      // 示例，启动。
+      Ext.create({
+        xtype: "viewport", layout: { type: "vbox", align: "center", pack: "center" },
+        items: [Ext.create("Demo.demo1.view.Demo1", { width: 500, height: 250, })]
+      });
+      //================================================================
+    });
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
+

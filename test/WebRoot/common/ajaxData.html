@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>数据传输测试</title>
+<script src="../js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../js/easyui145/jquery.easyui.min.js"></script>
+<script src="../js/common/json2.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var arr=[{label:"ajaxGet",value:"ajaxGet",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxData"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxGetWithParam",value:"ajaxGetWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxDataWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxGetWithParam2",value:"ajaxGetWithParam2",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxDataWithParam2"+"/"+"参数/34"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"ajaxPost",value:"ajaxPost",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPost"+"?d="+Math.floor(Math.random()*10000),param:{p1:12,p2:22}},
+		         {label:"ajaxPostWithParam",value:"ajaxPostWithParam",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxPostWithParam2",value:"ajaxPostWithParam2",url:"http://127.0.0.1:8083/test/rest/TestRests/getAjaxPostWithParam2"+"/"+"参数/67"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"ajaxJsonp",value:"ajaxJsonp",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpData"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxJsonpWithParam",value:"ajaxJsonpWithParam",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam"+"/"+"参数"+"?d="+Math.floor(Math.random()*10000),param:""},
+		         {label:"ajaxJsonpWithParam2",value:"ajaxJsonpWithParam2",url:"http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam2"+"/"+"参数/78"+"?d="+Math.floor(Math.random()*10000),param:{p1:22,p2:22}},
+		         {label:"",value:"",url:"",param:""},
+		         {label:"",value:"",url:"",param:""},
+		         {label:"",value:"",url:"",param:""},
+		         {label:"",value:"",url:"",param:""},
+		         {label:"",value:"",url:"",param:""}];
+		for(var i=0;i<arr.length;i++){
+			document.getElementById("selAjaxTypeId").options.add(new Option(arr[i].label,arr[i].value));
+		}
+		$('#ajaxTypeData').val(JSON.stringify(arr));
+	});
+	
+	function ajaTypeChoice(event){
+//		debugger;
+//		var sel=event.currentTarget.options;//[option, option, selectedIndex: 1]
+//		var selObj=event.currentTarget;
+		var selObj=document.getElementById("selAjaxTypeId");
+		var index = selObj.selectedIndex; // 选中索引
+		var text = selObj.options[index].text; // 选中文本
+		var selValue = selObj.options[index].value; // 选中值
+		var arr=$('#ajaxTypeData').val();
+		arr=JSON.parse(arr);
+		var selp={};
+		for(var i=0;i<arr.length;i++){
+			if(arr[i].value==selValue){
+				selp=arr[i];
+				break;
+			}
+		}
+		$('#queryUrl').val(selp.url);
+		$('#paramArea').val(JSON.stringify(selp.param));
+		$('#selectedAjaxTypeData').val(JSON.stringify(selp));
+		
+	}
+	
+	function doAjaxGet(p){
+		$.ajax({
+	          url:p.url,
+	          data: '',
+	          dataType:"json",
+	          type:"GET", 
+	          success:function(data){
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	    document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxGetWithParam(p){
+		$.ajax({
+	          url:p.url,
+	          data:p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:function(data){
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxGetWithParam2(p){
+		$.ajax({
+	          url:p.url,
+	          data:p.param,
+	          dataType:"json",
+	          type:"GET", 
+	          success:function(data){
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxPost(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:function(data){
+	        	  document.getElementById('result1').value=JSON.stringify(data); 
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxPostWithParam(p){
+		var p1="奥格";
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:function(data){
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxPostWithParam2(p){
+		$.ajax({
+	          url:p.url,
+	          data: p.param,
+	          dataType:"json",
+	          type:"POST", 
+	          success:function(data){
+	        	  var str=JSON.stringify(data);
+// 	        	  if(str.indexOf("\u")){
+	        		  
+// 	        	  }
+// 	        	  String s2 = new String(s1.getBytes("GB2312"));
+	        	  document.getElementById('result1').value=JSON.stringify(data);
+	          },
+	          error:function (XMLHttpRequest, textStatus, errorThrown) {
+	        	    // 通常 textStatus 和 errorThrown 之中
+	        	  document.getElementById('result1').value=textStatus;
+	        	}
+	       });
+	}
+	
+	function doAjaxJsonp(p){
+		var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpData";
+		 url=encodeURI(encodeURI(p.url)); 
+		$.ajax({
+           type: "get",
+           url: url,
+           data: '',
+           jsonp:"callbackparam",
+           jsonpCallback:"jsonpCallback",
+           dataType: "jsonp",
+           success: function(data){
+        	   document.getElementById('result1').value=JSON.stringify(data);
+           }
+       });
+		
+	}
+	function jsonpCallback(data){
+		document.getElementById('result1').value=JSON.stringify(data);
+	}
+	
+	/**
+		带参数的跨域
+	**/
+	function doAjaxJsonpWithParam(p){
+		var p1="奥格";
+		var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam"+"/"+p1;
+		 url=encodeURI(encodeURI(p.url)); 
+		$.ajax({
+           type: "get",
+           url: url,
+           data: p.param,
+           jsonp:"callbackparam",
+           jsonpCallback:"jsonpCallback",
+           dataType: "jsonp",
+           success: function(data){
+           	var aa=data;
+           }
+       });
+	}
+	
+	/**
+	带参数的跨域
+**/
+function doAjaxJsonpWithParam2(p){
+	var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxJsonpDataWithParam"+"/9";
+	 url=encodeURI(encodeURI(p.url)); 
+	$.ajax({
+       type: "get",
+       url: url,
+       data: p.param,
+       jsonp:"callbackparam",
+       jsonpCallback:"jsonpCallback",
+       dataType: "jsonp",
+       success: function(data){
+       	var aa=data;
+       }
+   });
+}
+	
+	function doAjaxPostWithp(){
+		var url = "http://" + "127.0.0.1"+":" + "8083" + "/test/rest/TestRests/getAjaxPostData2";
+		url=encodeURI(encodeURI(url));
+		var param = {};
+		param.p1 = "11";
+		param.p2 = "22";
+		param.p3='33';
+		$.ajax({
+          type: "post",
+          url: url,
+          data: param,
+          dataType: "json",
+          success: function(data){
+          	var aa=data;
+          }
+      });
+	}
+	
+	function doQuery(event){
+		debugger;
+		var str=document.getElementById('selectedAjaxTypeData').value;
+		var selp;
+		
+		try{
+				selp=JSON.parse(str);
+				if(!document.getElementById('isDefaultInput').checked){
+					selp={label:selp.label,
+							value:selp.value,
+							url:document.getElementById('queryUrl').value,
+							param:JSON.parse($('#paramArea').val())};
+				}
+			} catch (e) {
+			 if (e instanceof EvalError) {
+			     console.log(e.name + ":" + e.message);
+			 }else if (e instanceof RangeError) {
+				 console.log(e.name + ": " + e.message);
+			 }else if (e instanceof ReferenceError) {
+				 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof SyntaxError) {
+				 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof TypeError) {
+				 console.log(e.name + ": " + e.message);
+			 } else if (e instanceof URIError) {
+				 console.log(e.name + ": " + e.message);
+			 } 
+			 // etc 
+			}
+		if(selp.value=='ajaxGet'){
+			doAjaxGet(selp);
+		}else if(selp.value=='ajaxPost'){
+			doAjaxPost(selp);
+		}else if(selp.value=='ajaxGetWithParam'){
+			doAjaxGetWithParam(selp);
+		}else if(selp.value=='ajaxPostWithParam'){
+			doAjaxPostWithParam(selp);
+		}else if(selp.value=='ajaxJsonp'){
+			doAjaxJsonp(selp);
+		}else if(selp.value=='ajaxJsonpWithParam'){
+			doAjaxJsonpWithParam(selp);
+		}else if(selp.value=='ajaxGetWithParam2'){
+			doAjaxGetWithParam2(selp);
+		}else if(selp.value=='ajaxPostWithParam2'){
+			doAjaxPostWithParam2(selp);
+		}else if(selp.value=='ajaxJsonpWithParam2'){
+			doAjaxJsonpWithParam2(selp);
+		}
+	}
+	
+	function radioCheck(event){
+//		debugger;
+//		var rad=event.currentTarget;
+//		rad.checked;
+		var radios = document.getElementsByName('radio');
+        for (var i = 0; i < radios.length ; i++ )
+        {
+            if(radios[i].checked)
+            {
+                alert(radios[i].value);
+                break;
+            }
+        }
+	}
+	
+	function chkClick(event){
+//		var chk=event.currentTarget;//IE中无效
+// 		var chk=document.getElementsByName("chkParam");
+// 		document.getElementById('selectedAjaxTypeData').value;
+// 		chk.checked;
+        var inputs = document.getElementsByTagName("input");
+     	for (var i = 0; i < inputs.length; i++) {
+         	if (inputs[i].type == "checkbox") {
+         		if(inputs[i].value=="isDefaultUrlAndParam"){
+                 	if (inputs[i].checked) {
+                 		document.getElementById("queryUrl").disabled = true;
+        				document.getElementById("paramArea").disabled = true;
+                 	}else{
+                 		document.getElementById("queryUrl").disabled = false;
+        				document.getElementById("paramArea").disabled = false;
+                 	}
+         		}
+         	}
+     	}
+		/* debugger; */
+	}
+	
+	function addChk(){
+		var executerDiv=$("executerDiv");
+	    executerDiv.innerHTML="";
+	    var ul=document.createElement("ul");
+	    for(var i=0;i<tableDatas.length;i++){
+	        var arr=tableDatas[i];
+
+	        // 加入复选框
+	        var checkBox=document.createElement("input");
+	        checkBox.setAttribute("type","checkbox");
+	        checkBox.setAttribute("id",arr[0]);
+	        checkBox.setAttribute("name", arr[1]);
+
+	        var li=document.createElement("li");
+	        li.appendChild(checkBox);        
+	        li.appendChild(document.createTextNode(arr[1]));
+	        ul.appendChild(li);        
+	    }    
+
+	    executerDiv.appendChild(ul);
+	}
+	
+	function cancelHandle(event){
+		document.getElementById('result1').value='';
+		document.getElementById('result2').value='';
+	}
+	
+</script>
+<style type="text/css">
+body{ text-align:center} 
+	.contaner{
+		height:100%;
+		width:100%;
+		margin:0 auto; 
+		background-color:#fdcbcb;
+		border:#fa9696 solid 1px; 
+		border-radius:3px;
+	}
+	
+	.typeChoice{
+	
+		text-align:center;
+		vertical-align:middle;
+	}
+	
+	.urlInput {
+		width:600px;
+	}
+	
+	.paramDiv{
+		height:100px;
+/* 		line-height:100px; */
+		overflow:hidden;
+		border:1px solid #FF0099;
+		text-align:center;
+/* 		display: table-cell;  */
+		vertical-align:middle;
+	}
+	
+	.textArea{
+		height:100px;
+		width:600px;
+		margin:0 auto; 
+		background-color:#99CCFF;
+		border:#fa9696 solid 1px; 
+		border-radius:3px;
+/* 		line-height:15px; */
+		overflow:hidden;
+		border:1px solid #FF0099;
+		display:inline-block;
+	}
+	
+	.resultDiv{
+/*  		display:table-row;   */
+		width:1200px; 
+		height:200px; 
+		border:1px solid #99FF99; 
+		font-size:14px; 
+		text-align:center; 
+		vertical-align:middle;
+/* 		display:table-row;  */
+		overflow:hidden;
+	}
+	
+	.result1Div{
+		float:left;
+/* 		display:table-cell; */
+/* 		display:inline-block; */
+		margin-left:100px;
+		width:500px;
+		height:200px;
+		background-color:#aaaaaa;
+		vertical-align:middle;
+/* 		text-align:center; */
+/* 		margin:0px auto; */
+	}
+	
+	.result2Div{
+		float:left;
+		margin-left:520px;
+/* 		margin-top:-200px; */
+/* 		display:inline-block; */
+/* 		display:table-cell; */
+		height:200px;
+		background-color:#aaaaaa;
+		vertical-align:middle;
+		text-align:center;
+/* 		margin:0px auto; */
+	}
+	
+	.result1{
+		height:200px;
+		width:500px;
+		background-color:#CC99FF;
+		vertical-align:middle;
+		display:inline-block;
+	}
+	
+	.result2{
+		height:200px;
+		width:500px;
+		background-color:#6666FF;
+		vertical-align:middle;
+		display:inline-block;
+	}
+	
+	fieldset{
+		width:250px;
+		height:60px;
+		display:inline-block;
+	    background: rgba(255,255,255,.3);  
+	    border-color: rgba(255,255,255,.6);  
+	    border-style: solid;  
+	    border-width: 2px;  
+	    -moz-border-radius: 5px;  
+	    -webkit-border-radius: 5px;  
+	    -khtml-border-radius: 5px;  
+	    border-radius: 5px;  
+	    line-height: 10px;  
+	    list-style: none;  
+	    padding: 5px 10px;  
+	    margin-bottom: 2px;  
+	}  
+  
+  
+	fieldset legend {  
+	    color:#302A2A;  
+	    font: bold 16px/2 Verdana, Geneva, sans-serif;  
+	    font-weight: bold;  
+	    text-align: left;  
+	    text-shadow: 2px 2px 2px rgb(88, 126, 156);  
+	} 
+
+
+	  #executerDiv{
+    }
+
+    #executerDiv ul{
+        margin:0px;
+        padding:0px;
+        list-style-type:none;
+        vertical-align:middle  ;
+    }
+
+    #executerDiv li{
+        float:left;
+        display:block;
+
+        width:100px;  
+        height:20px;
+        line-height:20px;
+
+        font-size:14px;   
+        font-weight:bold;           
+        color:#666666;
+
+        text-decoration:none;
+        text-align:left;  
+
+        background:#ffffff;
+    }
+	
+</style>
+</head>
+<body>
+	  
+	    	    <div id="cc" class="easyui-layout" style="width:100%;height:400px;">   
+				    <div data-options="region:'north',title:'North Title',split:true" style="height:10px;"></div>   
+				    <div data-options="region:'south',title:'South Title',split:true" style="height:10px;"></div>   
+				    <div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>   
+				    <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>   
+				    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>   
+				</div>  
+</body>
+</html>
